@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { MenuIcon, MenuIconX, NavbarStyled, NavList, NavLogo } from "./NavbarStyled";
 
 const Navbar = () => {
+	const [open, setOpen] = useState(false);
+
+
+
 	return (
-		<div>
-			<h1>Navbar</h1>
-		</div>
+		<NavbarStyled>
+			<NavList>
+				<li><NavLogo>TwoShop</NavLogo> </li>
+				<li>
+					<div onClick={() => setOpen(!open)}>
+						{open ? <MenuIconX /> : <MenuIcon />}
+					</div>
+				</li>
+			</NavList>
+		</NavbarStyled>
 	);
 };
 
