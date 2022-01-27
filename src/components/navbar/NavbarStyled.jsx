@@ -18,6 +18,7 @@ export const NavList = styled.ul`
 	> li {
 		list-style: none;
 		margin: 1em;
+		z-index: 5;
 	}
 `;
 
@@ -28,7 +29,10 @@ export const NavLogo = styled.h3`
 	}
 `;
 
-export const IconWrapper = styled(motion.div)``;
+export const IconWrapper = styled(motion.div)`
+	z-index: 100;
+	
+`;
 
 export const MenuIcon = styled(HiChevronDoubleDown)`
 	color: rgb(231, 175, 61);

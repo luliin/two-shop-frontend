@@ -16,6 +16,8 @@ body {
 	color: #efeff4;
 }
 
+
+
 .button-color {
 	color: #6261f3;
 }
@@ -28,6 +30,6 @@ root {
 	--dark-background: #181831;
 	--delete-red: #dd5182;
 	--dark-details: rgb(67, 67, 124);
-	--yellow-details: rgb(231, 175, 61);
+	--yellow-details: rgb(231, 175, 61); /*#e7af3d*/
 	--glow: 0 0 8px rgb(231, 175, 61);
 }
