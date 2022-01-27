@@ -79,6 +79,9 @@ export const Wrapper = styled.div`
 
 export const HomeHeading = styled(motion.h1)`
 	text-align: center;
+	@media (max-width: 300px) {
+		font-size: 24px;
+	}
 `;
 
 export const ButtonWrapper = styled.div`
@@ -91,7 +94,7 @@ export const RegisterButton = styled(motion.button)`
 	width: 200px;
 	background: #6261f3;
 	border: 1px solid white;
-	color: #efeff4;
+	color: #fff;
 	cursor: pointer;
 	font-size: 1.2em;
 	font-family: "Barlow", sans-serif;
@@ -113,6 +116,9 @@ export const MemberDefaultText = styled.text`
 	font-family: "Barlow Condensed", sans-serif;
 	font-size: 24px;
 	padding: 0 5px;
+	@media (max-width: 300px){
+		font-size: 20px;
+	}
 `;
 
 export const MemberHiglightedText = styled(MemberDefaultText)`
