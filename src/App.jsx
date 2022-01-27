@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { AppContainer } from "./components/app/AppStyles";
 import Navbar from "./components/navbar/Navbar";
 import HomePage from "./pages/home/HomePage";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ShoppingListHubPage from "./pages/ShoppingListHubPage";
 import ShoppingListViewPage from "./pages/ShoppingListPage";
