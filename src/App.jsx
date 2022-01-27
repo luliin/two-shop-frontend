@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
+import { AppContainer } from "./components/app/AppStyles";
 import Navbar from "./components/navbar/Navbar";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/home/HomePage";
+import { HomeContainer } from "./pages/home/HomePageStyles";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ShoppingListHubPage from "./pages/ShoppingListHubPage";
@@ -8,7 +10,7 @@ import ShoppingListViewPage from "./pages/ShoppingListPage";
 
 function App() {
 	return (
-		<>
+		<AppContainer>
 			<Navbar />
 			<Routes>
 				<Route path={"/"} element={<HomePage />} />
@@ -18,7 +20,7 @@ function App() {
 				<Route path={"/lists/:id"} element={<ShoppingListViewPage />} />
 			</Routes>
 			<div className="App"></div>
-		</>
+		</AppContainer>
 	);
 }
 
