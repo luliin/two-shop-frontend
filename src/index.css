@@ -12,4 +12,22 @@ body {
 	font-family: "Barlow", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	overflow: hidden;
+	color: #efeff4;
+}
+
+.button-color {
+	color: #6261f3;
+}
+
+root {
+	--blue-text-color: #8182f9;
+	--blue-button-color: #6261f3;
+	--puple-text-color: #7475ee;
+	--darkest-bakground: #111025;
+	--dark-background: #181831;
+	--delete-red: #dd5182;
+	--dark-details: rgb(67, 67, 124);
+	--yellow-details: rgb(231, 175, 61);
+	--glow: 0 0 8px rgb(231, 175, 61);
 }
