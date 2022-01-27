@@ -1,10 +1,11 @@
 import React from "react";
+import { HomeContainer } from "./HomePageStyles";
 
 const HomePage = () => {
 	return (
-		<div>
+		<HomeContainer>
 			<h1>HomePage</h1>
-		</div>
+		</HomeContainer>
 	);
 };
 
