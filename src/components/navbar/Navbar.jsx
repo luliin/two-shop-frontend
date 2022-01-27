@@ -1,23 +1,50 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { MenuIcon, MenuIconX, NavbarStyled, NavList, NavLogo } from "./NavbarStyled";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+	IconWrapper,
+	MenuIcon,
+	MenuIconX,
+	NavbarStyled,
+	NavigationWrapper,
+	NavList,
+	NavLogo,
+} from "./NavbarStyled";
+import Menu from "../menu/Menu";
 
 const Navbar = () => {
 	const [open, setOpen] = useState(false);
 
-
-
 	return (
-		<NavbarStyled>
-			<NavList>
-				<li><NavLogo>TwoShop</NavLogo> </li>
-				<li>
-					<div onClick={() => setOpen(!open)}>
-						{open ? <MenuIconX /> : <MenuIcon />}
-					</div>
-				</li>
-			</NavList>
-		</NavbarStyled>
+		<NavigationWrapper>
+			<AnimatePresence>{open && <Menu />}</AnimatePresence>
+			<NavbarStyled>
+				<NavList>
+					<li>
+						<NavLogo>TwoShop</NavLogo>{" "}
+					</li>
+					<li>
+						<motion.div onClick={() => setOpen(!open)}>
+							{open ? (
+								<IconWrapper
+									animate={{ rotate: -90 }}
+									transition={{ duration: 1.5 }}
+								>
+									<MenuIconX />
+								</IconWrapper>
+							) : (
+								<IconWrapper
+									animate={{ rotate: -360 }}
+									transition={{ duration: 1 }}
+								>
+									<MenuIcon />
+								</IconWrapper>
+							)}
+						</motion.div>
+					</li>
+				</NavList>
+			</NavbarStyled>
+		</NavigationWrapper>
 	);
 };
 
