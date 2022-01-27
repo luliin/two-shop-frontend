@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { HiChevronDoubleDown, HiOutlineX } from "react-icons/hi";
+import { HiOutlineX } from "react-icons/hi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { motion } from "framer-motion";
 
 export const NavbarStyled = styled.nav`
@@ -31,10 +32,9 @@ export const NavLogo = styled.h3`
 
 export const IconWrapper = styled(motion.div)`
 	z-index: 100;
-	
 `;
 
-export const MenuIcon = styled(HiChevronDoubleDown)`
+export const MenuIcon = styled(GiHamburgerMenu)`
 	color: rgb(231, 175, 61);
 	font-size: 1.3em;
 	cursor: pointer;
