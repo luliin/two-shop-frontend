@@ -20,6 +20,10 @@ export const NavList = styled.ul`
 		list-style: none;
 		margin: 1em;
 		z-index: 5;
+		> a {
+			text-decoration: none;
+			color: ${({ theme }) => theme.colors.blueTextColor};
+		}
 	}
 `;
 

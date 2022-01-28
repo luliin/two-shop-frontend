@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import {
 	IconWrapper,
@@ -21,7 +21,9 @@ const Navbar = () => {
 			<NavbarStyled>
 				<NavList>
 					<li>
-						<NavLogo>TwoShop</NavLogo>{" "}
+						<Link to="/">
+							<NavLogo>TwoShop</NavLogo>
+						</Link>
 					</li>
 					<li>
 						<motion.div onClick={() => setOpen(!open)}>
