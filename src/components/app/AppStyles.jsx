@@ -23,6 +23,7 @@ export const Theme = {
 		glow: (color) => {
 			return `0 0 8px ${color}`;
 		},
+		shadow: "0px 0px 11px rgba(4, 4, 5, 0.4);",
 	},
 };
 
