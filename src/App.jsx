@@ -3,10 +3,9 @@ import { AppContainer } from "./components/app/AppStyles";
 import Navbar from "./components/navbar/Navbar";
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/login/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/register/RegisterPage";
 import ShoppingListHubPage from "./pages/ShoppingListHubPage";
 import ShoppingListViewPage from "./pages/ShoppingListPage";
-import { ThemeProvider } from "styled-components";
 
 function App() {
 	return (

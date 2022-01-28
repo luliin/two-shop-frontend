@@ -69,6 +69,7 @@ export const HomeHeadingContainer = styled(motion.div)`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	box-shadow: ${({ theme }) => theme.effects.shadow};
 	/* padding: 3em 0; */
 `;
 
@@ -115,7 +116,7 @@ export const MemberContainer = styled(motion.div)`
 	}
 `;
 
-export const MemberDefaultText = styled.text`
+export const MemberDefaultText = styled.div`
 	font-family: "Barlow Condensed", sans-serif;
 	font-size: 24px;
 	padding: 0 5px;
