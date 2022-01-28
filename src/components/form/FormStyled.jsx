@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { RiLockPasswordFill, RiLockPasswordLine, RiUser3Fill, RiUser3Line } from "react-icons/ri";
-import { MdEmail, MdOutlineEmail} from "react-icons/md";
+import { RiLockPasswordLine, RiUser3Line } from "react-icons/ri";
+import { MdOutlineEmail} from "react-icons/md";
 import { BiIdCard } from "react-icons/bi";
 import { FaIdCard } from "react-icons/fa";
 import { motion } from "framer-motion";
