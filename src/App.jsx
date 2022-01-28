@@ -4,8 +4,8 @@ import Navbar from "./components/navbar/Navbar";
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
-import ShoppingListHubPage from "./pages/ShoppingListHubPage";
-import ShoppingListViewPage from "./pages/ShoppingListPage";
+import ShoppingListHubPage from "./pages/hub/ShoppingListHubPage";
+import ShoppingListViewPage from "./pages/list/ShoppingListPage";
 
 function App() {
 	return (
