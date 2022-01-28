@@ -5,7 +5,7 @@ export const MenuContainer = styled(motion.div)`
 	display: flex;
 	height: 100vh;
 	width: min(100vw, 350px);
-	background-color: rgb(67, 67, 124);
+	background-color: ${({ theme }) => theme.colors.darkDetails};
 	position: absolute;
 	right: 0;
 	overflow: hidden;
@@ -28,7 +28,7 @@ export const MenuList = styled(motion.ul)`
 export const ListItem = styled(motion.div)`
 	letter-spacing: 1px;
 	padding-top: 1.5em;
-	color: ${({ active }) => (active ? " #e7af3d" : "")};
+	color: ${({ active, theme }) => (active ? theme.colors.yellowDetails : "")};
 	> span {	
 	}
 `;

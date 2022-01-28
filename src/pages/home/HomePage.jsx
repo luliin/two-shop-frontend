@@ -15,6 +15,8 @@ import {
 	Wrapper,
 } from "./HomePageStyles";
 
+import { Theme } from "../../components/app/AppStyles";
+
 const containerVariants = {
 	hidden: {
 		opacity: 0,
@@ -58,7 +60,7 @@ const textVariants = {
 };
 
 const glow = {
-	boxShadow: "0 0 8px rgb(231, 175, 61)",
+	boxShadow: Theme.effects.glow(Theme.colors.yellowDetails),
 	scale: 1.1,
 };
 
@@ -67,7 +69,7 @@ const HomePage = () => {
 	return (
 		<HomeContainer>
 			<Header>
-				{width > 768 && (
+				{width >= 768 && (
 					<SplashText>Välkommen till TwoShop!</SplashText>
 				)}
 			</Header>
@@ -99,6 +101,7 @@ const HomePage = () => {
 						<RegisterButton
 							variants={childVariants}
 							whileTap={glow}
+							whileHover={{ scale: 1.1 }}
 						>
 							Registrera dig nu
 						</RegisterButton>
@@ -106,7 +109,7 @@ const HomePage = () => {
 				</Wrapper>
 			</HomeHeadingContainer>
 			<MemberContainer>
-				<MemberDefaultText>Redan medlem? </MemberDefaultText>
+				<MemberDefaultText>Redan medlem?</MemberDefaultText>
 
 				<Link to="/login">
 					<MemberHiglightedText>Logga in här!</MemberHiglightedText>

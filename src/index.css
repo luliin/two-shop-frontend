@@ -29,7 +29,7 @@ root {
 	--darkest-bakground: #111025;
 	--dark-background: #181831;
 	--delete-red: #dd5182;
-	--dark-details: rgb(67, 67, 124);
+	--dark-details: #43437c;
 	--yellow-details: rgb(231, 175, 61); /*#e7af3d*/
-	--glow: 0 0 8px rgb(231, 175, 61);
+	--glow: 0 0 8px #e7af3d;
 }

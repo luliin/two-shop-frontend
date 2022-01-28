@@ -14,7 +14,7 @@ export const Header = styled.div`
 	position: relative;
 	width: 100%;
 	height: min(20vh, 300px);
-	background-image: url("/assets/splash-image.jpg");
+	/* background-image: url("/assets/splash-image.jpg"); */
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position-y: min(-25px, 0vh);
@@ -28,7 +28,10 @@ export const Header = styled.div`
 		height: 100%;
 		background-image: url("/assets/splash-image.jpg");
 		background-size: cover;
-		filter: saturate(30%);
+		filter: saturate(30%) opacity(50%);
+		@media (min-width: 768px) {
+			background-position-y: -5vh;
+		}
 	}
 	@media (max-width: 768px) {
 		background-size: 100%;
@@ -37,7 +40,7 @@ export const Header = styled.div`
 
 export const SplashText = styled.div`
 	position: relative;
-	color: #dd5182;
+	color: ${({ theme }) => theme.colors.deleteRed};
 	/* float: right; */
 	padding: 1em 0;
 	max-width: 95%;
@@ -49,7 +52,7 @@ export const SplashText = styled.div`
 
 export const SmallSplashText = styled.div`
 	max-width: 95%;
-	color: #dd5182;
+	color: ${({ theme }) => theme.colors.deleteRed};
 	padding: 1em 10px;
 	height: 10vh;
 	font-size: 0.9em;
@@ -60,7 +63,7 @@ export const HomeHeadingContainer = styled(motion.div)`
 	margin-bottom: 5vh;
 	height: 50vh;
 	width: 90%;
-	background: #181831;
+	background: ${({ theme }) => theme.colors.lighterBackground};
 	border-radius: 0 5em 0 5em;
 	display: flex;
 	flex-direction: column;
@@ -92,7 +95,7 @@ export const RegisterButton = styled(motion.button)`
 	height: 5vh;
 	border-radius: 5em;
 	width: 200px;
-	background: #6261f3;
+	background: ${({ theme }) => theme.colors.blueButtonColor};
 	border: 1px solid white;
 	color: #fff;
 	cursor: pointer;
@@ -122,6 +125,6 @@ export const MemberDefaultText = styled.text`
 `;
 
 export const MemberHiglightedText = styled(MemberDefaultText)`
-	color: #8182f9;
+	color: ${({ theme }) => theme.colors.blueTextColor};
 	cursor: pointer;
 `;

@@ -6,20 +6,26 @@ import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ShoppingListHubPage from "./pages/ShoppingListHubPage";
 import ShoppingListViewPage from "./pages/ShoppingListPage";
+import { ThemeProvider } from "styled-components";
 
 function App() {
 	return (
-		<AppContainer>
-			<Navbar />
-			<Routes>
-				<Route path={"/"} element={<HomePage />} />
-				<Route path={"/login"} element={<LoginPage />} />
-				<Route path={"/register"} element={<RegisterPage />} />
-				<Route path={"/lists"} element={<ShoppingListHubPage />} />
-				<Route path={"/lists/:id"} element={<ShoppingListViewPage />} />
-			</Routes>
-			<div className="App"></div>
-		</AppContainer>
+		
+			<AppContainer>
+				<Navbar />
+				<Routes>
+					<Route path={"/"} element={<HomePage />} />
+					<Route path={"/login"} element={<LoginPage />} />
+					<Route path={"/register"} element={<RegisterPage />} />
+					<Route path={"/lists"} element={<ShoppingListHubPage />} />
+					<Route
+						path={"/lists/:id"}
+						element={<ShoppingListViewPage />}
+					/>
+				</Routes>
+				<div className="App"></div>
+			</AppContainer>
+		
 	);
 }
 
