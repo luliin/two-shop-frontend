@@ -28,6 +28,10 @@ const LoginPage = () => {
 		};
 
 		console.log(userCredentials);
+
+		//add login graphql handling, save jwt to sessionStorage
+		//on succesful login redirect to hub page
+		sessionStorage.setItem("user", userCredentials.credential);
 	};
 	return (
 		<OuterContainer>
@@ -65,7 +69,10 @@ const LoginPage = () => {
 						{"Logga in"}
 					</WideButtonStyled>
 				</FormStyled>
-				<InputRow cursor={"pointer"} onClick={() => alert("Maila twoshopinfo@gmail.com")}>
+				<InputRow
+					cursor={"pointer"}
+					onClick={() => alert("Maila twoshopinfo@gmail.com")}
+				>
 					Glömt ditt lösenord?
 				</InputRow>
 				<FormDivider mt={"20px"} mb={"20px"} />
