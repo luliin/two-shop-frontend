@@ -176,7 +176,6 @@ const ShoppingListHubPage = () => {
 										{"Bekräfta"}
 									</WideButtonStyled>
 								</FormStyled>
-
 								<FormDivider
 									mt={"20px"}
 									mb={"20px"}
