@@ -55,7 +55,7 @@ export const CardLine = styled.div`
 
 export const CollaboratorIcon = styled(RiGroup2Line)`
 	padding-top: ${({ pt }) => (pt ? pt : "")};
-	color: ${({ theme }) => theme.colors.purpleTextColor};
+	color: ${({ theme, color }) => color ? theme.colors.lightText : theme.colors.purpleTextColor};
 	font-size: ${({ fs }) => (fs ? fs : "1.6em;")};
 `;
 

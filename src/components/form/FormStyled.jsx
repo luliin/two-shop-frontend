@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import { RiLockPasswordLine, RiUser3Line } from "react-icons/ri";
-import { MdOutlineEmail} from "react-icons/md";
+import { MdOutlineEmail } from "react-icons/md";
 import { BiIdCard } from "react-icons/bi";
 import { FaIdCard } from "react-icons/fa";
+import { BsCardChecklist } from "react-icons/bs";
 import { motion } from "framer-motion";
 
 export const FormStyled = styled.form`
 	margin: 0 auto;
 	width: 100%;
-	max-width: 414px;
-	padding: 1rem;
+	max-width: ${({ maxw }) => (maxw ? maxw : "414px")};
+	padding: ${({ padding }) => (padding ? padding : "1rem")};
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -65,12 +66,14 @@ export const IdIconAlt = styled(FaIdCard)`
 	font-size: 24px;
 `;
 
-
+export const ListIcon = styled(BsCardChecklist)`
+	font-size: 24px;
+`;
 
 export const InputRow = styled.div`
 	display: flex;
 	align-items: center;
-	flex-grow: 1em;
+	/* flex-grow: 1em; */
 	gap: ${({ gap }) => (gap ? gap : "1em")};
 	font-weight: ${({ fw }) => (fw ? fw : "")};
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
@@ -89,7 +92,7 @@ export const InputRow = styled.div`
 
 export const FormDivider = styled.div`
 	height: 1px;
-	width: min(290px, 80vw);
+	width: ${({ width }) => (width ? width : "min(290px, 80vw)")};
 	background-color: ${({ theme }) => theme.colors.darkDetails};
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
 	margin-top: ${({ mt }) => (mt ? mt : "")};

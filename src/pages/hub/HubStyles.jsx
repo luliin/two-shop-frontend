@@ -62,7 +62,7 @@ export const RoundButton = styled(motion.button)`
 	right: 15%;
 `;
 
-export const Model = styled.div`
+export const Model = styled(motion.div)`
 	z-index: auto;
 	display: ${({ show }) => (show ? "flex" : "none")};
 	position: absolute;
@@ -87,5 +87,6 @@ export const ModalContainer = styled(motion.div)`
 	position: fixed;
 	top: 55%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	/* transform: translate(-50%, -50%); */
+	
 `;
