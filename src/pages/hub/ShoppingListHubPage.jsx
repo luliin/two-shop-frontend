@@ -41,17 +41,22 @@ const testList = {
 };
 
 const ShoppingListHubPage = () => {
+	const [listName, setListName] = useState("");
+	const [collaboratorCredential, setCollaboratorCredential] = useState("");
 	const [show, setShow] = useState(false);
-
-	const handleCreateNewList = () => {
-		console.log("Klick");
-		setShow(!show);
-	};
 	const [hover, setHover] = useState(false);
 
-	const handleSubmit = (e) => {
+	const handleShowModal = () => {
+		setShow(!show);
+	};
+
+	const handleCreateShoppingList = (e) => {
 		e.preventDefault();
-		console.log("Submit");
+		let createShoppingListInput = {
+			name: listName,
+			collaboratorCredential: collaboratorCredential,
+		};
+		console.log(createShoppingListInput);
 	};
 	return (
 		<>
@@ -73,7 +78,7 @@ const ShoppingListHubPage = () => {
 					<ShoppingListCard></ShoppingListCard>
 					<ShoppingListCard></ShoppingListCard>
 					<RoundButton
-						onClick={handleCreateNewList}
+						onClick={handleShowModal}
 						variants={buttonVariants}
 						whileHover={buttonVariants.hover}
 						type="button"
@@ -89,7 +94,7 @@ const ShoppingListHubPage = () => {
 							key="backdrop"
 							transition={{ duration: 0.2 }}
 							show={"show"}
-							onClick={(e) => {
+							onClick={() => {
 								if (!hover) {
 									setShow(false);
 								}
@@ -116,18 +121,22 @@ const ShoppingListHubPage = () => {
 								}}
 							>
 								<FormHeading>Skapa ny lista</FormHeading>
-								<FormStyled onSubmit={handleSubmit}>
+								<FormStyled onSubmit={handleCreateShoppingList}>
 									<InputRow>
 										<LabelStyled htmlFor="listname">
-											<ListIcon title="Användarnamn eller e-post till kollaboratör" />
+											<ListIcon title="Ange namnet du vill ge den nya shoppinglistan" />
 										</LabelStyled>
 										<InputField
+											id="new-list-name"
 											width={"min(250px, 56vw)"}
 											autoComplete="off"
 											type="text"
 											placeholder={"Listans namn"}
 											name="listname"
 											required
+											onChange={(e) =>
+												setListName(e.target.value)
+											}
 										/>
 									</InputRow>
 									<InputRow>
@@ -152,6 +161,11 @@ const ShoppingListHubPage = () => {
 												"Användarnamn eller e-post"
 											}
 											name="collaborator"
+											onChange={(e) =>
+												setCollaboratorCredential(
+													e.target.value
+												)
+											}
 										/>
 									</InputRow>
 									<WideButtonStyled
