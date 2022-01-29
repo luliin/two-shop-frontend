@@ -8,7 +8,6 @@ import {
 	FormHeading,
 	FormStyled,
 	IdIcon,
-	IdIconAlt,
 	InputRow,
 	OuterContainer,
 	PasswordIcon,
