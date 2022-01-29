@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { RiGroup2Line, RiHeartLine } from "react-icons/ri";
+import { motion } from "framer-motion";
 
-export const ListCard = styled.div`
+export const ListCard = styled(motion.div)`
 	background: ${({ theme }) => theme.colors.lighterBackground};
-	height: min(70vw, 270px);
+	height: min(70vw, 265px);
 	width: min(70vw, 275px);
 	box-shadow: ${({ theme }) => theme.effects.shadow};
 	border-radius: 1em;
+	cursor: pointer;
 `;
 
 export const TextWrapper = styled.div`
@@ -30,6 +32,10 @@ export const TextWrapper = styled.div`
 	&::-webkit-scrollbar {
 		display: none;
 	}
+	display: ${({ d }) => (d ? d : "")};
+	align-items: ${({ align }) => (align ? align : "")};
+	justify-content: ${({ justify }) => (justify ? justify : "")};
+	flex-direction: ${({ direction }) => (direction ? direction : "")};
 `;
 
 export const ListTitle = styled.h2`
@@ -55,7 +61,8 @@ export const CardLine = styled.div`
 
 export const CollaboratorIcon = styled(RiGroup2Line)`
 	padding-top: ${({ pt }) => (pt ? pt : "")};
-	color: ${({ theme, color }) => color ? theme.colors.lightText : theme.colors.purpleTextColor};
+	color: ${({ theme, color }) =>
+		color ? theme.colors.lightText : theme.colors.purpleTextColor};
 	font-size: ${({ fs }) => (fs ? fs : "1.6em;")};
 `;
 
@@ -64,14 +71,3 @@ export const OwnerIcon = styled(RiHeartLine)`
 	color: ${({ theme }) => theme.colors.purpleTextColor};
 	font-size: ${({ fs }) => (fs ? fs : "1.6em;")};
 `;
-
-export const UserContainer = styled.div`
-	padding-top: ${({ pt }) => (pt ? pt : "")};
-	color: ${({ theme }) => theme.colors.purpleTextColor};
-	font-size: ${({ fs }) => (fs ? fs : "1.6em;")};
-    width: 1.6em;
-    height: 1.6em;
-`;
-
-
-
