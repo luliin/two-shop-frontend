@@ -18,6 +18,11 @@ export const Theme = {
 		darkDetails: "#43437c",
 		yellowDetails: "#e7af3d",
 		lightText: "#efeff4",
+		lightishText: "#a1a1c7",
+	},
+	fonts: {
+		primary: "'Barlow', sans-serif",
+		secondary: "'Barlow Condensed', sans-serif",
 	},
 	effects: {
 		glow: (color) => {
