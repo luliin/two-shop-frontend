@@ -16,29 +16,43 @@ import {
 } from "./HubStyles";
 import { AnimatePresence } from "framer-motion";
 import {
-	FormContainer,
 	FormDivider,
 	FormHeading,
 	FormStyled,
 	InputRow,
 	ListIcon,
-	PasswordIcon,
-	StrongText,
-	UserIcon,
 } from "../../components/form/FormStyled";
 import {
 	InputField,
 	LabelStyled,
 } from "../../components/input/FormInputStyles";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
-import { Link } from "react-router-dom";
-import { BsCardChecklist } from "react-icons/bs";
 
 const testList = {
 	name: "Testlistan",
 	owner: "luliin",
 	collaborator: "Lekkit",
+	isOwner: true,
+	id: 1,
 };
+
+const testList2 = {
+	name: "Testlistan 2",
+	owner: "luliin",
+	collaborator: null,
+	isOwner: true,
+	id: 4,
+};
+
+const testList3 = {
+	name: "Testlistan 2",
+	owner: "Lekkit",
+	collaborator: "luliin",
+	isOwner: false,
+	id: 3,
+};
+
+const listArray = [testList, testList2, testList3];
 
 const ShoppingListHubPage = () => {
 	const [listName, setListName] = useState("");
@@ -70,13 +84,10 @@ const ShoppingListHubPage = () => {
 			</TopBar>
 			<OuterContainer>
 				<HubContainer>
-					<ShoppingListCard {...testList}></ShoppingListCard>
-					<ShoppingListCard {...testList}></ShoppingListCard>
-					<ShoppingListCard {...testList}></ShoppingListCard>
-					<ShoppingListCard></ShoppingListCard>
-					<ShoppingListCard></ShoppingListCard>
-					<ShoppingListCard></ShoppingListCard>
-					<ShoppingListCard></ShoppingListCard>
+					{listArray.map((list) => (
+						<ShoppingListCard {...list} key={list.id} />
+					))}
+
 					<RoundButton
 						onClick={handleShowModal}
 						variants={buttonVariants}

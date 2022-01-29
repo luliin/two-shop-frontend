@@ -16,14 +16,14 @@ export const OuterContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: calc(100vh - min(130px, 11vh));
+	height: calc(100vh - min(135px, 14vh));
+	padding-top: 1em;
+	overflow: auto;
 `;
 
 export const HubContainer = styled.div`
 	height: 100%;
-	padding-top: 1em;
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	justify-items: center;
 	align-items: center;
@@ -32,7 +32,9 @@ export const HubContainer = styled.div`
 	column-gap: 1vw;
 	row-gap: 1vh;
 	@media (max-width: 560px) {
+		height: 100%;
 		row-gap: 2vh;
+		
 	}
 `;
 
