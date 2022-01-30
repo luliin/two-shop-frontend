@@ -4,12 +4,12 @@ import styled from "styled-components";
 export const TopBar = styled.div`
 	height: min(50px, 4vh);
 	display: flex;
-	justify-content: space-between;
+	justify-content: ${({ justify }) => (justify ? justify : "space-between")};
 	align-items: center;
 	font-weight: bold;
 	font-family: ${({ theme }) => theme.fonts.secondary};
 	font-size: 20px;
-	padding: 0 2em 0 2em;
+	padding: ${({ p }) => (p ? p : "0 2em 0 2em")};
 `;
 
 export const OuterContainer = styled.div`
@@ -34,7 +34,6 @@ export const HubContainer = styled.div`
 	@media (max-width: 560px) {
 		height: 100%;
 		row-gap: 2vh;
-		
 	}
 `;
 
@@ -90,5 +89,4 @@ export const ModalContainer = styled(motion.div)`
 	top: 55%;
 	left: 50%;
 	/* transform: translate(-50%, -50%); */
-	
 `;

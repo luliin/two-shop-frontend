@@ -37,6 +37,7 @@ export const NavLogo = styled.h3`
 
 export const IconWrapper = styled(motion.div)`
 	z-index: 100;
+	cursor: ${({cursor})=> cursor ? cursor: "pointer"}
 `;
 
 export const MenuIcon = styled(GiHamburgerMenu)`
