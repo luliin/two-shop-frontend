@@ -18,7 +18,7 @@ function App() {
 					<Route path={"/register"} element={<RegisterPage />} />
 					<Route path={"/lists"} element={<ShoppingListHubPage />} />
 					<Route
-						path={"/lists/:id"}
+						path={"/lists/:listId"}
 						element={<ShoppingListViewPage />}
 					/>
 				</Routes>
