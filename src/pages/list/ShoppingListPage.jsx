@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "../../components/loader/Loader";
 import { IconWrapper } from "../../components/navbar/NavbarStyled";
 import { OuterContainer, TopBar } from "../hub/HubStyles";
 
@@ -38,7 +39,7 @@ const ShoppingListViewPage = () => {
 				{loadingCompleted ? (
 					loadingCompleted && <div>loading completed</div>
 				) : (
-					<div>loading ...</div>
+					<div><Loader /></div>
 				)}
 			</OuterContainer>
 		</>
