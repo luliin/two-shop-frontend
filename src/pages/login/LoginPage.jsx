@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 import {
@@ -19,19 +19,35 @@ import {
 import { buttonVariants } from "../../util/AnimationVariants";
 
 const LoginPage = () => {
+	const [loginInput, setLoginInput] = useState({
+		username: "",
+		password: "",
+	});
+
+	function handleChange(event) {
+		const value = event.target.value;
+		setLoginInput({
+			...loginInput,
+			[event.target.name]: value,
+		});
+	}
+
+	const resetInputs = () => {
+		setLoginInput({
+			username: "",
+			password: "",
+		});
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log(event.target[0].value);
-		let userCredentials = {
-			credential: event.target[0].value,
-			password: event.target[1].value,
-		};
-
-		console.log(userCredentials);
+		console.log(loginInput);
 
 		//add login graphql handling, save jwt to sessionStorage
 		//on succesful login redirect to hub page
-		sessionStorage.setItem("user", userCredentials.credential);
+		sessionStorage.setItem("user", loginInput.username);
+		resetInputs();
 	};
 	return (
 		<OuterContainer>
@@ -39,10 +55,15 @@ const LoginPage = () => {
 				<FormHeading>Logga in</FormHeading>
 				<FormStyled onSubmit={handleSubmit}>
 					<InputRow>
-						<LabelStyled htmlFor="username">
+						<LabelStyled
+							htmlFor="username"
+							title={"Ange användarnamn eller e-post"}
+						>
 							<UserIcon />
 						</LabelStyled>
 						<InputField
+							value={loginInput.username}
+							onChange={handleChange}
 							autoComplete="username"
 							type="text"
 							placeholder={"Användarnamn eller e-post"}
@@ -51,11 +72,16 @@ const LoginPage = () => {
 						/>
 					</InputRow>
 					<InputRow>
-						<LabelStyled htmlFor="password">
+						<LabelStyled
+							htmlFor="password"
+							title={"Ange ditt lösenord"}
+						>
 							<PasswordIcon />
 						</LabelStyled>
 
 						<InputField
+							value={loginInput.password}
+							onChange={handleChange}
 							placeholder="Lösenord"
 							autoComplete="password"
 							name="password"
