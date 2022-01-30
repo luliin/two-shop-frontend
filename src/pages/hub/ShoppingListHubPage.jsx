@@ -28,31 +28,9 @@ import {
 } from "../../components/input/FormInputStyles";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 
-const testList = {
-	name: "Testlistan",
-	owner: "luliin",
-	collaborator: "Lekkit",
-	isOwner: true,
-	id: 1,
-};
+import { UserHubData } from "../../util/UserLoginTestData";
 
-const testList2 = {
-	name: "Testlistan 2",
-	owner: "luliin",
-	collaborator: null,
-	isOwner: true,
-	id: 4,
-};
-
-const testList3 = {
-	name: "Testlistan 2",
-	owner: "Lekkit",
-	collaborator: "luliin",
-	isOwner: false,
-	id: 3,
-};
-
-const listArray = [testList, testList2, testList3];
+const hubData = UserHubData;
 
 const ShoppingListHubPage = () => {
 	const [listName, setListName] = useState("");
@@ -72,6 +50,7 @@ const ShoppingListHubPage = () => {
 		};
 		console.log(createShoppingListInput);
 	};
+
 	return (
 		<>
 			<TopBar>
@@ -84,8 +63,29 @@ const ShoppingListHubPage = () => {
 			</TopBar>
 			<OuterContainer>
 				<HubContainer>
-					{listArray.map((list) => (
-						<ShoppingListCard {...list} key={list.id} />
+					{hubData.ownedShoppingLists.map((list) => (
+						<ShoppingListCard
+							{...{
+								id: list.id,
+								isOwner: true,
+								collaborator: list.collaborator.username,
+								name: list.name,
+								owner: hubData.username,
+							}}
+							key={list.id}
+						/>
+					))}
+					{hubData.collaboratorShoppingLists.map((list) => (
+						<ShoppingListCard
+							{...{
+								id: list.id,
+								isOwner: false,
+								owner: list.owner.username,
+								name: list.name,
+								collaborator: hubData.username,
+							}}
+							key={list.id}
+						/>
 					))}
 
 					<RoundButton

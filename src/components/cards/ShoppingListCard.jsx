@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	CardLine,
 	CollaboratorIcon,
@@ -11,13 +12,22 @@ import {
 
 import Avatar from "./../avatar/Avatar";
 
-const ShoppingListCard = (list) => {
+const ShoppingListCard = ({id, name, isOwner, owner, collaborator}) => {
+
+	let navigate = useNavigate();
+
+	const handleCardClick = () => {
+		navigate(`/lists/${id}`)
+	}
+
 	return (
-		<ListCard key={list.id}
-			whileHover={{scale: 1.03}}
+		<ListCard
+			key={id}
+			whileHover={{ scale: 1.03 }}
+			onClick={handleCardClick}
 		>
 			<TextWrapper p={"1em"} maxH={"50%"} height={"50%"}>
-				<ListTitle>{list.name}</ListTitle>
+				<ListTitle>{name}</ListTitle>
 			</TextWrapper>
 			<CardLine />
 			<TextWrapper
@@ -37,22 +47,22 @@ const ShoppingListCard = (list) => {
 					mt={"1vh"}
 					color={"white"}
 				>
-					{list.isOwner ? (
-						list.isOwner && (
+					{isOwner ? (
+						isOwner && (
 							<>
 								<Avatar
 									{...{
-										username: list.owner,
-										owner: list.isOwner,
+										username: owner,
+										owner: isOwner,
 									}}
 								/>
 								<OwnerIcon />
-								{list.collaborator && (
+								{collaborator && (
 									<>
 										<Avatar
 											{...{
-												username: list.collaborator,
-												owner: !list.isOwner,
+												username: collaborator,
+												owner: !isOwner,
 											}}
 										/>
 									</>
@@ -63,15 +73,15 @@ const ShoppingListCard = (list) => {
 						<>
 							<Avatar
 								{...{
-									username: list.owner,
-									owner: !list.isOwner,
+									username: collaborator,
+									owner: !isOwner,
 								}}
 							/>
 							<CollaboratorIcon />
 							<Avatar
 								{...{
-									username: list.collaborator,
-									owner: list.isOwner,
+									username: owner,
+									owner: isOwner,
 								}}
 							/>
 						</>
