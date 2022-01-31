@@ -47,19 +47,23 @@ const ShoppingListViewPage = () => {
 					<RemoveText>Lägg till partner</RemoveText>
 				</div>
 			</TopBar>
-			<OuterContainer height={"calc(100vh - min(200px, 20vh))"} >
+			<OuterContainer height={"calc(100vh - min(200px, 20vh))"}>
 				{loadingCompleted ? (
 					loadingCompleted && (
 						<>
 							<ListContainer>
 								{listData.items.map((item) => (
-									<ItemCard key={item.itemId} {...{
-										name: item.name,
-										quantity: item.quantity,
-										unit: item.unit,
-										isCompleted: item.isCompleted,
-										listId: listData.shoppingListId
-									}} />
+									<ItemCard
+										key={item.itemId}
+										{...{
+											name: item.name,
+											quantity: item.quantity,
+											unit: item.unit,
+											isCompleted: item.isCompleted,
+											listId: listData.shoppingListId,
+											itemId: item.itemId,
+										}}
+									/>
 								))}
 							</ListContainer>
 						</>
