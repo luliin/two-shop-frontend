@@ -37,6 +37,8 @@ export const NavLogo = styled.h3`
 
 export const IconWrapper = styled(motion.div)`
 	z-index: 100;
+	display:flex;
+	align-items: center;
 	cursor: ${({cursor})=> cursor ? cursor: "pointer"}
 `;
 
