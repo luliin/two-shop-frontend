@@ -57,6 +57,9 @@ export const OuterTileContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-radius: 1em;
+	background: ${({theme})=> theme.colors.lighterBackground};
+	box-shadow: ${({theme})=> theme.effects.shadow};
 `;
 
 export const ItemTitleWrapper = styled.div`
@@ -122,6 +125,6 @@ export const CheckBoxChecked = styled(RiCheckboxLine)`
 `;
 
 export const CheckBoxUnchecked = styled(RiCheckboxBlankLine)`
-    font-size: 24px;
-    color: ${({ theme }) => theme.colors.darkDetails};
+	font-size: 24px;
+	color: ${({ theme }) => theme.colors.darkDetails};
 `;

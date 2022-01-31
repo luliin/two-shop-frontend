@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const IconWrapper = styled(motion.div)`
 	background-color: ${({ bg }) => (bg ? bg : "")};
-	height: 100%;
+	height: ${({ height }) => (height ? height : "")};
 	display: flex;
 	align-items: center;
 	justify-content: center;

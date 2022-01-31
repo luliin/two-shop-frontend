@@ -19,15 +19,29 @@ export const OuterContainer = styled.div`
 	height: ${({ height }) =>
 		height ? height : "calc(100vh - min(135px, 14vh))"};
 	padding-top: 1em;
-	padding-bottom: ${({pb})=> pb ? pb : ""};
+	padding-bottom: ${({ pb }) => (pb ? pb : "")};
 	overflow: auto;
 	/* Todo: see if I can solve the proplem in ListPage without hiding scrollbar */
 	/* IE and Edge */
-	/* -ms-overflow-style: none; 
+	-ms-overflow-style: none;
 	scrollbar-width: none;
 	&::-webkit-scrollbar {
-		display: none;
-	} */
+		background: ${({ theme }) => theme.colors.lighterBackground};
+		/* scrollbar-color: ${({ theme }) => theme.colors.lightText}; */
+		width: 0.5rem;
+		
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: ${({ theme }) => theme.colors.darkDetails};
+		border-radius: 5em;
+	}
+	@media (max-width: 768px) {
+		&::-webkit-scrollbar {
+			display: none;
+			/* height: 0.5rem;  */
+		}
+	}
 `;
 
 export const HubContainer = styled.div`
