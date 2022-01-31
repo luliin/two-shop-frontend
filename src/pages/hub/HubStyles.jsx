@@ -16,9 +16,18 @@ export const OuterContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: calc(100vh - min(135px, 14vh));
+	height: ${({ height }) =>
+		height ? height : "calc(100vh - min(135px, 14vh))"};
 	padding-top: 1em;
+	padding-bottom: ${({pb})=> pb ? pb : ""};
 	overflow: auto;
+	/* Todo: see if I can solve the proplem in ListPage without hiding scrollbar */
+	/* IE and Edge */
+	/* -ms-overflow-style: none; 
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	} */
 `;
 
 export const HubContainer = styled.div`
