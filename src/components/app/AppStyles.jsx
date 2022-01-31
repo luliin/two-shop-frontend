@@ -19,6 +19,7 @@ export const Theme = {
 		yellowDetails: "#e7af3d",
 		lightText: "#efeff4",
 		lightishText: "#a1a1c7",
+		green: "#388d82",
 	},
 	fonts: {
 		primary: "'Barlow', sans-serif",
