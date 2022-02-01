@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
 import { TiSortNumerically } from "react-icons/ti";
 import {
+	RiAddLine,
 	RiCheckboxBlankLine,
 	RiCheckboxLine,
 	RiDeleteBinLine,
@@ -178,5 +179,9 @@ export const QuantityIcon = styled(TiSortNumerically)`
 `;
 
 export const UnitIcon = styled(RiPencilRuler2Line)`
+	font-size: 24px;
+`;
+
+export const PlusIcon = styled(RiAddLine)`
 	font-size: 24px;
 `;

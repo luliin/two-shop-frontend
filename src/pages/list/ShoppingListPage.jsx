@@ -19,6 +19,7 @@ import {
 	TitleWrapper,
 	PressableText,
 	TrashIcon,
+	PlusIcon,
 } from "./ListStyles";
 
 import ItemCard from "../../components/cards/ItemCard";
@@ -155,7 +156,7 @@ const ShoppingListViewPage = () => {
 					<PressableText>
 						{listData.collaborator ? (
 							listData.collaborator && (
-								<MutedText>
+								<MutedText onClick={handleRemoveCollaborator}>
 									Kicka {listData.collaborator.username}
 								</MutedText>
 							)
@@ -198,7 +199,10 @@ const ShoppingListViewPage = () => {
 								title="Lägg till produkt"
 								right={"10%"}
 							>
-								+
+								<IconWrapper>
+									<PlusIcon />
+								</IconWrapper>
+								
 							</RoundButton>
 							<RoundButton
 								onClick={handleClearList}

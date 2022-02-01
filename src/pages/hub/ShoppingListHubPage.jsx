@@ -29,6 +29,8 @@ import {
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 
 import { UserHubData } from "../../util/UserLoginTestData";
+import { PlusIcon } from "../list/ListStyles";
+import { IconWrapper } from "../../components/icons/IconWrapper";
 
 const hubData = UserHubData;
 
@@ -95,7 +97,9 @@ const ShoppingListHubPage = () => {
 						type="button"
 						title="Skapa ny lista"
 					>
-						+
+						<IconWrapper>
+							<PlusIcon />
+						</IconWrapper>
 					</RoundButton>
 				</HubContainer>
 				<AnimatePresence>
