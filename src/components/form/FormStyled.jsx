@@ -39,6 +39,7 @@ export const FormContainer = styled.div`
 
 export const FormHeading = styled.h1`
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
+	text-align:center;
 	&:hover {
 		text-shadow: ${({ theme }) =>
 			theme.effects.glow(theme.colors.deleteRed)};

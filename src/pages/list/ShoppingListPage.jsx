@@ -52,6 +52,7 @@ const ShoppingListViewPage = () => {
 	const [toDelete, setToDelete] = useState(false);
 	const [loadingCompleted, setLoadingCompleted] = useState(false);
 	const [clear, setClear] = useState(false);
+	const [removeCollaborator, setRemoveCollaborator] = useState(false);
 	const [item, setItem] = useState(emptyItem);
 
 	const handleCreateItemInput = (e) => {
@@ -73,6 +74,7 @@ const ShoppingListViewPage = () => {
 			setEdit(false);
 			setToDelete(false);
 			setClear(false);
+			setRemoveCollaborator(false);
 		}
 	};
 
@@ -119,6 +121,13 @@ const ShoppingListViewPage = () => {
 		console.log(currentItem);
 	};
 
+	const handleRemoveCollaborator = () => {
+		console.log("Ta bort kollaboratör");
+		setRemoveCollaborator(true);
+		setItem({ shoppingListId: item.shoppingListId });
+		handleShowModal();
+	};
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setLoadingCompleted(true);
@@ -155,7 +164,7 @@ const ShoppingListViewPage = () => {
 						)}
 					</PressableText>
 				) : (
-					<PressableText>
+					<PressableText onClick={handleRemoveCollaborator}>
 						<MutedText>Lämna listan</MutedText>
 					</PressableText>
 				)}
@@ -232,24 +241,24 @@ const ShoppingListViewPage = () => {
 										}}
 									>
 										{edit ? (
-											<FormHeading>
-												Ändra produkt
-											</FormHeading>
+											<FormHeading {...{ children: "Ändra produkt",}} />
 										) : toDelete ? (
-											<FormHeading>
-												Ta bort {item.name}?
-											</FormHeading>
+											<FormHeading {...{ children: `Ta bort ${item.name}` }} />
 										) : clear ? (
-											<FormHeading>
-												Töm listan?
-											</FormHeading>
+											<FormHeading {...{ children: "Töm listan?" }} />
+										) : removeCollaborator ? (
+											listData.isOwner ? (
+												<FormHeading {...{children: `Vill du kicka ${listData.collaborator.username}?`}} />
+											) : (
+												<FormHeading {...{children: "Vill du lämna listan?"}} />
+											)
 										) : (
-											<FormHeading>
-												Lägg till produkt
-											</FormHeading>
+											<FormHeading {...{children: "Lägg till produkt"}} />
 										)}
 										<FormStyled onSubmit={handleModifyItem}>
-											{toDelete ? (
+											{toDelete ||
+											clear ||
+											removeCollaborator ? (
 												<DeleteForm />
 											) : (
 												<ModifyItemForm
