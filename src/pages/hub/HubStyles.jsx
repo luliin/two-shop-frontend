@@ -29,7 +29,6 @@ export const OuterContainer = styled.div`
 		background: ${({ theme }) => theme.colors.lighterBackground};
 		/* scrollbar-color: ${({ theme }) => theme.colors.lightText}; */
 		width: 0.5rem;
-		
 	}
 
 	&::-webkit-scrollbar-thumb {
@@ -83,7 +82,7 @@ export const RoundButton = styled(motion.button)`
 	font-size: 24px;
 	cursor: pointer;
 	bottom: 1em;
-	right: 15%;
+	right: ${({ right }) => (right ? right : "15%")};
 `;
 
 export const Model = styled(motion.div)`
