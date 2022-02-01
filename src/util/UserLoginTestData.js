@@ -37,8 +37,9 @@ export const UserHubData = {
 export const ListData = {
 	shoppingListId: "1",
 	name: "Första listan",
+	isOwner: false,
 	collaborator: {
-		username: "Lekkit",
+		username: "jolia"
 	},
 	owner: {
 		username: "luliin",
