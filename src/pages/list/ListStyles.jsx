@@ -129,6 +129,7 @@ export const ItemTitleWrapper = styled.div`
 export const ItemTitle = styled.p`
 	margin: 1vh 10px 0 10px;
 	overflow-wrap: anywhere;
+	text-decoration: ${({ checked }) => (checked ? checked : "")};
 	@media (max-width: 389px) {
 		margin-top: 0.5em;
 	}

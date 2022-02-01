@@ -83,6 +83,7 @@ export const RoundButton = styled(motion.button)`
 	cursor: pointer;
 	bottom: 1em;
 	right: ${({ right }) => (right ? right : "15%")};
+	left: ${({ left }) => (left ? left : "")};
 `;
 
 export const Model = styled(motion.div)`

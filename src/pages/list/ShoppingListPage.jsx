@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
 import { IconWrapper } from "../../components/icons/IconWrapper";
-import { itemSelectOptions } from "../../util/DataObjects";
+
 import {
 	ModalContainer,
 	Model,
@@ -15,11 +15,10 @@ import {
 	Backbutton,
 	ListContainer,
 	ListTitle,
-	QuantityIcon,
 	MutedText,
 	TitleWrapper,
-	UnitIcon,
 	PressableText,
+	TrashIcon,
 } from "./ListStyles";
 
 import ItemCard from "../../components/cards/ItemCard";
@@ -29,35 +28,31 @@ import {
 	FormDivider,
 	FormHeading,
 	FormStyled,
-	InputRow,
-	ListIcon,
 } from "../../components/form/FormStyled";
-import {
-	InputField,
-	LabelStyled,
-	Select,
-} from "../../components/input/FormInputStyles";
-import { CollaboratorIcon } from "../../components/cards/ShoppingListCardStyles";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 import { buttonVariants } from "../../util/AnimationVariants";
 import { Theme } from "../../components/app/AppStyles";
+import DeleteForm from "../../components/form/forms/DeleteItemForm";
+import ModifyItemForm from "../../components/form/forms/ModifyItemForm";
 
 const ShoppingListViewPage = () => {
-	const navigate = useNavigate();
 	const listData = ListData;
-
-	const [show, setShow] = useState(false);
-	const [hover, setHover] = useState(false);
-	const [loadingCompleted, setLoadingCompleted] = useState(false);
-	const [editItem, setEditItem] = useState(false);
-	const [deleteItem, setDeleteItem] = useState(false);
-
-	const [item, setItem] = useState({
+	const emptyItem = {
 		shoppingListId: listData.shoppingListId,
 		name: "",
 		quantity: "",
 		unit: "",
-	});
+	};
+
+	const navigate = useNavigate();
+
+	const [show, setShow] = useState(false);
+	const [hover, setHover] = useState(false);
+	const [edit, setEdit] = useState(false);
+	const [toDelete, setToDelete] = useState(false);
+	const [loadingCompleted, setLoadingCompleted] = useState(false);
+	const [clear, setClear] = useState(false);
+	const [item, setItem] = useState(emptyItem);
 
 	const handleCreateItemInput = (e) => {
 		const value =
@@ -71,10 +66,57 @@ const ShoppingListViewPage = () => {
 		setShow(!show);
 	};
 
+	const handleLeaveModal = (e) => {
+		if (!hover || e.target.id === "cancel") {
+			setShow(false);
+			setItem(emptyItem);
+			setEdit(false);
+			setToDelete(false);
+			setClear(false);
+		}
+	};
+
+	const handleClearList = () => {
+		setClear(true);
+		handleShowModal();
+	};
+
 	const handleModifyItem = (e) => {
 		e.preventDefault();
 		console.log("Modify item");
-		console.log(item);
+		if (item.quantity) item.quantity = Number(item.quantity);
+		edit
+			? console.log("Uppdaterar", item)
+			: toDelete
+			? console.log("Tar bort", item)
+			: console.log(item);
+	};
+
+	const handleEditItem = (currentItem) => {
+		setEdit(true);
+		setItem({
+			...item,
+			name: currentItem.name,
+			quantity: currentItem.quantity,
+			unit: currentItem.unit,
+			itemId: currentItem.itemId,
+		});
+		handleShowModal();
+	};
+
+	const handleDeleteItem = (itemId, name) => {
+		setToDelete(true);
+		console.log(item.shoppingListId, itemId);
+		setItem({
+			shoppingListId: item.shoppingListId,
+			itemId: Number(itemId),
+			name: name,
+		});
+		handleShowModal();
+	};
+
+	const handleCheckItem = (currentItem) => {
+		console.log(currentItem);
 	};
 
 	useEffect(() => {
@@ -132,6 +174,9 @@ const ShoppingListViewPage = () => {
 										isCompleted: item.isCompleted,
 										listId: listData.shoppingListId,
 										itemId: item.itemId,
+										handleEditItem: handleEditItem,
+										handleDeleteItem: handleDeleteItem,
+										handleCheckItem: handleCheckItem,
 									}}
 								/>
 							))}
@@ -146,6 +191,16 @@ const ShoppingListViewPage = () => {
 							>
 								+
 							</RoundButton>
+							<RoundButton
+								onClick={handleClearList}
+								variants={buttonVariants}
+								whileHover={buttonVariants.hover}
+								type="button"
+								title="Töm listan"
+								left={"10%"}
+							>
+								<TrashIcon />
+							</RoundButton>
 						</ListContainer>
 						<AnimatePresence>
 							{show && (
@@ -154,11 +209,7 @@ const ShoppingListViewPage = () => {
 									key="backdrop"
 									transition={{ duration: 0.2 }}
 									show={"show"}
-									onClick={() => {
-										if (!hover) {
-											setShow(false);
-										}
-									}}
+									onClick={handleLeaveModal}
 								>
 									<ModalContainer
 										exit={{ y: "-200vh" }}
@@ -180,116 +231,37 @@ const ShoppingListViewPage = () => {
 											setHover(false);
 										}}
 									>
-										<FormHeading>
-											Lägg till produkt
-										</FormHeading>
+										{edit ? (
+											<FormHeading>
+												Ändra produkt
+											</FormHeading>
+										) : toDelete ? (
+											<FormHeading>
+												Ta bort {item.name}?
+											</FormHeading>
+										) : clear ? (
+											<FormHeading>
+												Töm listan?
+											</FormHeading>
+										) : (
+											<FormHeading>
+												Lägg till produkt
+											</FormHeading>
+										)}
 										<FormStyled onSubmit={handleModifyItem}>
-											<InputRow>
-												<LabelStyled htmlFor="item-name">
-													<ListIcon title="Ange namnet du vill ge den nya shoppinglistan" />
-												</LabelStyled>
-												<InputField
-													value={item.name}
-													id="item-name"
-													width={"min(250px, 56vw)"}
-													autoComplete="off"
-													type="text"
-													placeholder={
-														"Produktens namn"
-													}
-													name="name"
-													required
-													onChange={
-														handleCreateItemInput
-													}
+											{toDelete ? (
+												<DeleteForm />
+											) : (
+												<ModifyItemForm
+													{...{
+														item: item,
+														handleCreateItemInput:
+															handleCreateItemInput,
+													}}
 												/>
-											</InputRow>
-											<InputRow>
-												<LabelStyled htmlFor="item-quantity">
-													<QuantityIcon title="Antal" />
-												</LabelStyled>
-												<InputField
-													value={item.quantity}
-													id="item-quantity"
-													width={"min(250px, 56vw)"}
-													autoComplete="off"
-													type="number"
-													placeholder={"Antal"}
-													name="quantity"
-													required
-													onChange={
-														handleCreateItemInput
-													}
-												/>
-											</InputRow>
-											<InputRow>
-												<LabelStyled htmlFor="unit">
-													<UnitIcon
-														title="Enhet"
-														fs={"24px"}
-														color={"light"}
-													/>
-												</LabelStyled>
-												<Select
-													name="unit"
-													value={item.unit}
-													onChange={
-														handleCreateItemInput
-													}
-												>
-													<option value="" disabled>
-														Välj enhet...
-													</option>
+											)}
 
-													{itemSelectOptions.map(
-														(selectOption) =>
-															!selectOption.optGroup ? (
-																<option
-																	key={
-																		selectOption
-																	}
-																	value={
-																		selectOption.label
-																	}
-																>
-																	{
-																		selectOption.label
-																	}
-																</option>
-															) : (
-																<optgroup
-																	key={
-																		selectOption.optGroup
-																	}
-																	label={
-																		selectOption.optGroup
-																	}
-																>
-																	{selectOption.list.map(
-																		(
-																			option
-																		) => (
-																			<option
-																				key={
-																					option.label
-																				}
-																				value={
-																					option.label
-																				}
-																			>
-																				{
-																					option.label
-																				}
-																			</option>
-																		)
-																	)}
-																</optgroup>
-															)
-													)}
-												</Select>
-											</InputRow>
 											<WideButtonStyled
-												onClick={handleModifyItem}
 												width={"min(300px, 67vw)"}
 												whileHover={
 													buttonVariants.hover
@@ -313,7 +285,8 @@ const ShoppingListViewPage = () => {
 													Theme.colors.yellowDetails
 												),
 											}}
-											onClick={handleShowModal}
+											id={"cancel"}
+											onClick={handleLeaveModal}
 										>
 											Avbryt
 										</PressableText>
