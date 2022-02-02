@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../util/WindowHooks";
 import {
 	Header,
@@ -16,6 +16,8 @@ import {
 } from "./HomePageStyles";
 
 import { Theme } from "../../components/app/AppStyles";
+import { useContext } from "react/cjs/react.development";
+import { UserContext } from "../../context/UserContext";
 
 const containerVariants = {
 	hidden: {
@@ -65,57 +67,74 @@ const glow = {
 };
 
 const HomePage = () => {
+	const { user, setUser } = useContext(UserContext);
+	const navigate = useNavigate();
+	useEffect(() => {
+		const navigateToLists = () => navigate("/lists");
+		if (user) {
+			navigateToLists();
+		}
+		return () => {};
+	}, [navigate]);
 	const { width } = useWindowDimensions();
 	return (
-		<HomeContainer>
-			<Header>
-				{width >= 768 && (
-					<SplashText>Välkommen till TwoShop!</SplashText>
-				)}
-			</Header>
-			{width < 768 && (
-				<SmallSplashText>
-					<h2>Välkommen till TwoShop!</h2>
-				</SmallSplashText>
-			)}
-			<HomeHeadingContainer
-				variants={containerVariants}
-				initial="hidden"
-				animate="visible"
-			>
-				<Wrapper>
-					<HomeHeading variants={textVariants}>Vårt mål:</HomeHeading>
-				</Wrapper>
-				<Wrapper>
-					<HomeHeading variants={textVariants}>
-						Handla enklare
-					</HomeHeading>
-				</Wrapper>
-				<Wrapper>
-					<HomeHeading variants={textVariants}>
-						- tillsammans!
-					</HomeHeading>
-				</Wrapper>
-				<Wrapper>
-					<Link to="/register">
-						<RegisterButton
-							variants={childVariants}
-							whileTap={glow}
-							whileHover={{ scale: 1.1 }}
-						>
-							Registrera dig nu
-						</RegisterButton>
-					</Link>
-				</Wrapper>
-			</HomeHeadingContainer>
-			<MemberContainer>
-				<MemberDefaultText>Redan medlem?</MemberDefaultText>
+		<>
+			{!user && (
+				<HomeContainer>
+					<Header>
+						{width >= 768 && (
+							<SplashText>Välkommen till TwoShop!</SplashText>
+						)}
+					</Header>
+					{width < 768 && (
+						<SmallSplashText>
+							<h2>Välkommen till TwoShop!</h2>
+						</SmallSplashText>
+					)}
+					<HomeHeadingContainer
+						variants={containerVariants}
+						initial="hidden"
+						animate="visible"
+					>
+						<Wrapper>
+							<HomeHeading variants={textVariants}>
+								Vårt mål:
+							</HomeHeading>
+						</Wrapper>
+						<Wrapper>
+							<HomeHeading variants={textVariants}>
+								Handla enklare
+							</HomeHeading>
+						</Wrapper>
+						<Wrapper>
+							<HomeHeading variants={textVariants}>
+								- tillsammans!
+							</HomeHeading>
+						</Wrapper>
+						<Wrapper>
+							<Link to="/register">
+								<RegisterButton
+									variants={childVariants}
+									whileTap={glow}
+									whileHover={{ scale: 1.1 }}
+								>
+									Registrera dig nu
+								</RegisterButton>
+							</Link>
+						</Wrapper>
+					</HomeHeadingContainer>
+					<MemberContainer>
+						<MemberDefaultText>Redan medlem?</MemberDefaultText>
 
-				<Link to="/login">
-					<MemberHiglightedText>Logga in här!</MemberHiglightedText>
-				</Link>
-			</MemberContainer>
-		</HomeContainer>
+						<Link to="/login">
+							<MemberHiglightedText>
+								Logga in här!
+							</MemberHiglightedText>
+						</Link>
+					</MemberContainer>
+				</HomeContainer>
+			)}
+		</>
 	);
 };
 
