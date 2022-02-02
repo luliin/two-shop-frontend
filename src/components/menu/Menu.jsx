@@ -1,8 +1,10 @@
-import { AnimatePresence } from "framer-motion";
 import React from "react";
+import { Link } from "react-router-dom";
 import { ListItem, MenuContainer, MenuList, TextWrapper } from "./MenuStyles";
 
-const Menu = () => {
+const Menu = ({shouldClose}) => {
+
+	const [close, setClose] = shouldClose
 	const variants = {
 		hover: {
 			scale: 1.1,
@@ -14,22 +16,38 @@ const Menu = () => {
 			animate={{ x: 0, y: 0, opacity: 1 }}
 			transition={{ duration: 0.7, ease: "easeInOut" }}
 			exit={{ x: 500, opacity: 0 }}
+			onTap={() => {
+				setClose(false);
+			}}
+			onMouseEnter={() => {
+				setClose(false);
+			}}
+			onMouseLeave={() => {
+				setClose(true);
+			}}
 		>
 			<MenuList>
 				<li>
 					<ListItem>
-						<TextWrapper
-							whileHover={{
-								borderRadius: "2em",
-								boxShadow: "0 0 8px rgb(231, 175, 61)",
-
-								scale: 1.1,
-								textShadow: "0 0 8px rgb(231,175,61)",
-								letterSpacing: "2px",
-							}}
+						<Link
+							to={"/login"}
 						>
-							Logga in
-						</TextWrapper>
+							<TextWrapper
+								whileHover={{
+									borderRadius: "2em",
+									boxShadow: "0 0 8px rgb(231, 175, 61)",
+
+									scale: 1.1,
+									textShadow: "0 0 8px rgb(231,175,61)",
+									letterSpacing: "2px",
+								}}
+								onClickCapture={()=> {
+									setClose(true);
+								}}
+							>
+								Logga in
+							</TextWrapper>
+						</Link>
 					</ListItem>
 				</li>
 				<li>

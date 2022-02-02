@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 import {
@@ -16,9 +16,13 @@ import {
 	InputField,
 	LabelStyled,
 } from "../../components/input/FormInputStyles";
+import { UserContext } from "../../context/UserContext";
 import { buttonVariants } from "../../util/AnimationVariants";
 
 const LoginPage = () => {
+
+	const message = useContext(UserContext)
+
 	const [loginInput, setLoginInput] = useState({
 		username: "",
 		password: "",
@@ -49,6 +53,7 @@ const LoginPage = () => {
 		sessionStorage.setItem("user", loginInput.username);
 		resetInputs();
 	};
+	console.log(message)
 	return (
 		<OuterContainer>
 			<FormContainer>

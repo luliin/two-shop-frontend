@@ -12,12 +12,23 @@ import {
 } from "./NavbarStyled";
 import Menu from "../menu/Menu";
 
-const Navbar = () => {
-	const [open, setOpen] = useState(false);
+const Navbar = ({ menuOpen, shouldClose }) => {
+	const [open, setOpen] = menuOpen;
+	const [closeMenu, setCloseMenu] = shouldClose;
+
+	
 
 	return (
 		<NavigationWrapper>
-			<AnimatePresence>{open && <Menu />}</AnimatePresence>
+			<AnimatePresence>
+				{open && (
+					<Menu
+						{...{
+							shouldClose: [closeMenu, setCloseMenu],
+						}}
+					/>
+				)}
+			</AnimatePresence>
 			<NavbarStyled>
 				<NavList>
 					<li>
@@ -26,7 +37,7 @@ const Navbar = () => {
 						</Link>
 					</li>
 					<li>
-						<motion.div onClick={() => setOpen(!open)}>
+						<motion.div onClickCapture={() => setOpen(!open)}>
 							{open ? (
 								<IconWrapper
 									animate={{ rotate: -90 }}
