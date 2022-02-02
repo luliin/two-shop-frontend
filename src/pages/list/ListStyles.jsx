@@ -156,7 +156,7 @@ export const TileRow = styled(ItemTitleWrapper)`
 
 export const TrashIcon = styled(RiDeleteBinLine)`
 	font-size: 24px;
-	color: ${({ theme }) => theme.colors.deleteRed};
+	color: ${({ theme, color }) => color ? color: theme.colors.deleteRed};
 `;
 
 export const EditIcon = styled(RiEdit2Line)`
