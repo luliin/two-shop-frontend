@@ -67,7 +67,7 @@ const glow = {
 };
 
 const HomePage = () => {
-	const { user, setUser } = useContext(UserContext);
+	const { user } = useContext(UserContext);
 	const navigate = useNavigate();
 	useEffect(() => {
 		const navigateToLists = () => navigate("/lists");
