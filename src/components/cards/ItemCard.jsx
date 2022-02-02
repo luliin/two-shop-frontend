@@ -38,6 +38,7 @@ const ItemCard = ({
 					let newValue = !checked;
 					setChecked(newValue);
 					handleCheckItem({
+						shoppingListId: listId,
 						itemId: itemId,
 						isCompleted: newValue,
 					});
