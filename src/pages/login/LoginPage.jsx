@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { Theme } from "../../components/app/AppStyles";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 import {
 	FormContainer,
@@ -17,11 +18,19 @@ import {
 	LabelStyled,
 } from "../../components/input/FormInputStyles";
 import { UserContext } from "../../context/UserContext";
+import { useLogin } from "../../hooks/users/useLogin";
 import { buttonVariants } from "../../util/AnimationVariants";
 
 const LoginPage = () => {
+	const message = useContext(UserContext);
 
-	const message = useContext(UserContext)
+	const [error, setError] = useState(false);
+
+	const handleErrorMessage = () => {
+		setError(false);
+	};
+
+	const login = useLogin();
 
 	const [loginInput, setLoginInput] = useState({
 		username: "",
@@ -45,15 +54,31 @@ const LoginPage = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log(event.target[0].value);
-		console.log(loginInput);
-
-		//add login graphql handling, save jwt to sessionStorage
 		//on succesful login redirect to hub page
-		sessionStorage.setItem("user", loginInput.username);
-		resetInputs();
+
+		login({
+			variables: {
+				username: loginInput.username,
+				password: loginInput.password,
+			},
+		})
+			.then((response) => {
+				let user = {
+					id: response.data.login.appUser.id,
+					username: response.data.login.appUser.username,
+					accessToken: response.data.login.jwt
+				};
+				sessionStorage.setItem("user", JSON.stringify(user));
+				resetInputs();
+			})
+			.catch((e) => {
+				if (e.message === "Unauthorized") {
+					setError(true);
+				} else {
+					console.log("nej");
+				}
+			});
 	};
-	console.log(message)
 	return (
 		<OuterContainer>
 			<FormContainer>
@@ -67,6 +92,7 @@ const LoginPage = () => {
 							<UserIcon />
 						</LabelStyled>
 						<InputField
+							onFocus={handleErrorMessage}
 							value={loginInput.username}
 							onChange={handleChange}
 							autoComplete="username"
@@ -85,6 +111,7 @@ const LoginPage = () => {
 						</LabelStyled>
 
 						<InputField
+							onFocus={handleErrorMessage}
 							value={loginInput.password}
 							onChange={handleChange}
 							placeholder="Lösenord"
@@ -93,6 +120,16 @@ const LoginPage = () => {
 							required
 						/>
 					</InputRow>
+					{error && (
+						<InputRow
+							cursor={"pointer"}
+							onClick={() => alert("Maila twoshopinfo@gmail.com")}
+							color={Theme.colors.deleteRed}
+						>
+							Felaktiga användaruppgifter!
+						</InputRow>
+					)}
+
 					<WideButtonStyled
 						whileHover={buttonVariants.hover}
 						whileTap={buttonVariants.tapGlow}
