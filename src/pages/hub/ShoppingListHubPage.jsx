@@ -36,7 +36,7 @@ import { IconWrapper } from "../../components/icons/IconWrapper";
 import { UserContext } from "../../context/UserContext";
 import { useGetUserShoppingLists } from "../../hooks/shoppingLists/useGetShoppingLists";
 import authService from "../../services/auth.service";
-import { Theme } from "../../components/app/AppStyles";
+import { useCreateShoppingList } from "../../hooks/shoppingLists/useCreateShoppingList";
 
 const hubData = UserHubData;
 
@@ -47,6 +47,8 @@ const ShoppingListHubPage = () => {
 	const [show, setShow] = useState(false);
 	const [hover, setHover] = useState(false);
 	const { user } = useContext(UserContext);
+
+	const createShoppingList = useCreateShoppingList();
 
 	const handleShowModal = () => {
 		setShow(!show);
@@ -59,6 +61,19 @@ const ShoppingListHubPage = () => {
 			collaboratorCredential: collaboratorCredential,
 		};
 		console.log(createShoppingListInput);
+		createShoppingList({
+			variables: { createShoppingListInput: createShoppingListInput },
+		})
+			.then((response) => {
+				console.log(response.data.createShoppingList);
+				let id = response.data.createShoppingList.id;
+				navigate(`/lists/${id}`, {
+					state: { id },
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	useEffect(() => {
@@ -86,19 +101,18 @@ const ShoppingListHubPage = () => {
 							<HubContainer>
 								<>
 									{data.ownedShoppingLists.length === 0 &&
-									data &&
-									data.collaboratorShoppingLists.length ===
-										0 ? (
-										<EmptyListContainer>
-											<h2>Här var det tomt!</h2>
-											<h3>
-												Tryck på knappen nedan för att
-												skapa en ny shoppinglista{" "}
-											</h3>
-										</EmptyListContainer>
-									) : (
-										<>Laddar...</>
-									)}
+										data &&
+										data.collaboratorShoppingLists
+											.length === 0 && (
+											<EmptyListContainer>
+												<h2>Här var det tomt!</h2>
+												<h3>
+													Tryck på knappen nedan för
+													att skapa en ny
+													shoppinglista{" "}
+												</h3>
+											</EmptyListContainer>
+										)}
 								</>
 								{data.ownedShoppingLists.map((list) => (
 									<ShoppingListCard
