@@ -14,6 +14,7 @@ import {
 	RoundButton,
 	ModalContainer,
 	Model,
+	EmptyListContainer,
 } from "./HubStyles";
 import { AnimatePresence } from "framer-motion";
 import {
@@ -88,29 +89,13 @@ const ShoppingListHubPage = () => {
 									data &&
 									data.collaboratorShoppingLists.length ===
 										0 ? (
-										<div
-											style={{
-												display: "flex",
-												flexDirection: "column",
-												justifyContent: "center",
-												alignItems: "center",
-												height: "60vh",
-											}}
-										>
-											<h2
-												style={{
-													color: Theme.colors
-														.yellowDetails,
-													marginBottom: "3vh",
-												}}
-											>
-												Här var det tomt!
-											</h2>
-											<h3 style={{ textAlign: "center" }}>
+										<EmptyListContainer>
+											<h2>Här var det tomt!</h2>
+											<h3>
 												Tryck på knappen nedan för att
 												skapa en ny shoppinglista{" "}
 											</h3>
-										</div>
+										</EmptyListContainer>
 									) : (
 										<>Laddar...</>
 									)}

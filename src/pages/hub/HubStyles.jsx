@@ -113,3 +113,16 @@ export const ModalContainer = styled(motion.div)`
 	left: 50%;
 	/* transform: translate(-50%, -50%); */
 `;
+
+export const EmptyListContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 60vh;
+	text-align: center;
+	h2 {
+		color: ${({ theme }) => theme.colors.yellowDetails};
+		margin-bottom: 3vh;
+	}
+`;
