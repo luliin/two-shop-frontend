@@ -12,6 +12,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { onError } from "@apollo/client/link/error";
 import { print, GraphQLError } from "graphql";
 import { Client, createClient } from "graphql-ws";
+import { authHeader } from "../services/auth-header";
 
 class WebSocketLink extends ApolloLink {
 	constructor(options) {
@@ -60,18 +61,20 @@ const errorLink = onError(({ graphQLErrors, networkError, clientErrors }) => {
 	if (graphQLErrors)
 		graphQLErrors.forEach(({ message, locations, path }) => {
 			console.log(
-				`[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(locations[0])}, Path: ${path}`
+				`[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
+					locations[0]
+				)}, Path: ${path}`
 			);
 		});
-    
+
 	if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
 const authLink = new ApolloLink2((operation, forward) => {
-	const token = null;
+	const token = authHeader();
 	operation.setContext(() => ({
 		headers: {
-			authorization: token,
+			Authorization: token,
 		},
 	}));
 	return forward(operation);
