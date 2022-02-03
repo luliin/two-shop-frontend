@@ -60,11 +60,13 @@ const ShoppingListHubPage = () => {
 	};
 
 	useEffect(() => {
+		const navigateHome = () => navigate("/");
 		if (!user) {
-			navigate({ to: "/" });
+			navigateHome();
 		}
+		return () => {};
 	}, [navigate, user]);
-	let data = useGetUserShoppingLists(authService.getCurrentUser().id);
+	let data = useGetUserShoppingLists(authService.getCurrentUser()?.id);
 	return (
 		<>
 			{user && (
