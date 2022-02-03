@@ -35,6 +35,7 @@ import { IconWrapper } from "../../components/icons/IconWrapper";
 import { UserContext } from "../../context/UserContext";
 import { useGetUserShoppingLists } from "../../hooks/shoppingLists/useGetShoppingLists";
 import authService from "../../services/auth.service";
+import { Theme } from "../../components/app/AppStyles";
 
 const hubData = UserHubData;
 
@@ -82,6 +83,38 @@ const ShoppingListHubPage = () => {
 					<OuterContainer>
 						{data && (
 							<HubContainer>
+								<>
+									{data.ownedShoppingLists.length === 0 &&
+									data &&
+									data.collaboratorShoppingLists.length ===
+										0 ? (
+										<div
+											style={{
+												display: "flex",
+												flexDirection: "column",
+												justifyContent: "center",
+												alignItems: "center",
+												height: "60vh",
+											}}
+										>
+											<h2
+												style={{
+													color: Theme.colors
+														.yellowDetails,
+													marginBottom: "3vh",
+												}}
+											>
+												Här var det tomt!
+											</h2>
+											<h3 style={{ textAlign: "center" }}>
+												Tryck på knappen nedan för att
+												skapa en ny shoppinglista{" "}
+											</h3>
+										</div>
+									) : (
+										<>Laddar...</>
+									)}
+								</>
 								{data.ownedShoppingLists.map((list) => (
 									<ShoppingListCard
 										{...{
