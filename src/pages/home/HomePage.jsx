@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../util/WindowHooks";
 import {
@@ -16,7 +16,6 @@ import {
 } from "./HomePageStyles";
 
 import { Theme } from "../../components/app/AppStyles";
-import { useContext } from "react/cjs/react.development";
 import { UserContext } from "../../context/UserContext";
 
 const containerVariants = {
@@ -69,13 +68,14 @@ const glow = {
 const HomePage = () => {
 	const { user } = useContext(UserContext);
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		const navigateToLists = () => navigate("/lists");
 		if (user) {
 			navigateToLists();
 		}
 		return () => {};
-	}, [navigate]);
+	}, [navigate, user]);
 	const { width } = useWindowDimensions();
 	return (
 		<>
