@@ -6,8 +6,9 @@ import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import ShoppingListHubPage from "./pages/hub/ShoppingListHubPage";
 import ShoppingListViewPage from "./pages/list/ShoppingListPage";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { UserContext } from "./context/UserContext";
+import authService from "./services/auth.service";
 
 function App() {
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -18,28 +19,38 @@ function App() {
 	const handleMenuOpen = () => {
 		if (menuOpen) setMenuOpen(!shouldClose);
 	};
+
+	useEffect(() => {
+		setUser(authService.getCurrentUser());
+	}, []);
 	return (
-		<UserContext.Provider value={userValue}>
-			<AppContainer onClick={handleMenuOpen}>
-				<Navbar
-					{...{
-						menuOpen: [menuOpen, setMenuOpen],
-						shouldClose: [shouldClose, setShouldClose],
-					}}
-				/>
-				<Routes>
-					<Route path={"/"} element={<HomePage />} />
-					<Route path={"/login"} element={<LoginPage />} />
-					<Route path={"/register"} element={<RegisterPage />} />
-					<Route path={"/lists"} element={<ShoppingListHubPage />} />
-					<Route
-						path={"/lists/:listId"}
-						element={<ShoppingListViewPage />}
+		<>
+			{}
+			<UserContext.Provider value={userValue}>
+				<AppContainer onClick={handleMenuOpen}>
+					<Navbar
+						{...{
+							menuOpen: [menuOpen, setMenuOpen],
+							shouldClose: [shouldClose, setShouldClose],
+						}}
 					/>
-				</Routes>
-				<div className="App"></div>
-			</AppContainer>
-		</UserContext.Provider>
+					<Routes>
+						<Route path={"/"} element={<HomePage />} />
+						<Route path={"/login"} element={<LoginPage />} />
+						<Route path={"/register"} element={<RegisterPage />} />
+						<Route
+							path={"/lists"}
+							element={<ShoppingListHubPage />}
+						/>
+						<Route
+							path={"/lists/:listId"}
+							element={<ShoppingListViewPage />}
+						/>
+					</Routes>
+					<div className="App"></div>
+				</AppContainer>
+			</UserContext.Provider>
+		</>
 	);
 }
 
