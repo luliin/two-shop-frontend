@@ -1,12 +1,22 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { ListItem, MenuContainer, MenuList, TextWrapper } from "./MenuStyles";
-import logout from "../../services/auth.service";
+import AuthService from "../../services/auth.service";
+import { MenuContext } from "../../context/MenuContext";
 
 const Menu = ({ shouldClose }) => {
 	const [close, setClose] = shouldClose;
-	const { user } = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
+	const { menu, setMenu } = useContext(MenuContext);
+	const navigate = useNavigate();
+	const logOut = () => {
+		AuthService.logout();
+		setUser(null);
+		setMenu(false);
+		navigate("/");
+	};
+
 	return (
 		<MenuContainer
 			initial={{ x: 500, y: 0, opacity: 0 }}
@@ -37,8 +47,7 @@ const Menu = ({ shouldClose }) => {
 									letterSpacing: "2px",
 								}}
 								onClickCapture={() => {
-									setClose(true);
-									logout();
+									logOut();
 								}}
 							>
 								Logga ut
@@ -92,7 +101,7 @@ const Menu = ({ shouldClose }) => {
 											letterSpacing: "2px",
 										}}
 										onClickCapture={() => {
-											setClose(true);
+											setMenu(false)
 										}}
 									>
 										Logga in

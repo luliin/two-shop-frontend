@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import {
 	IconWrapper,
@@ -11,17 +11,16 @@ import {
 	NavLogo,
 } from "./NavbarStyled";
 import Menu from "../menu/Menu";
+import { MenuContext } from "../../context/MenuContext";
 
-const Navbar = ({ menuOpen, shouldClose }) => {
-	const [open, setOpen] = menuOpen;
+const Navbar = ({ shouldClose }) => {
 	const [closeMenu, setCloseMenu] = shouldClose;
-
-	
+	const { menu, setMenu } = useContext(MenuContext);
 
 	return (
 		<NavigationWrapper>
 			<AnimatePresence>
-				{open && (
+				{menu && (
 					<Menu
 						{...{
 							shouldClose: [closeMenu, setCloseMenu],
@@ -37,8 +36,8 @@ const Navbar = ({ menuOpen, shouldClose }) => {
 						</Link>
 					</li>
 					<li>
-						<motion.div onClickCapture={() => setOpen(!open)}>
-							{open ? (
+						<motion.div onClickCapture={() => setMenu(!menu)}>
+							{menu ? (
 								<IconWrapper
 									animate={{ rotate: -90 }}
 									transition={{ duration: 1.5 }}
