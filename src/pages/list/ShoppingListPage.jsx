@@ -37,6 +37,7 @@ import ModifyItemForm from "../../components/form/forms/ModifyItemForm";
 import { useGetShoppingListById } from "../../hooks/shoppingLists/useGetShoppingListById";
 import { UserContext } from "../../context/UserContext";
 import { useModifyItems } from "../../hooks/items/useModifyItems";
+import { useSubscribeToItemModified } from "../../hooks/items/useSubscribeToShoppingListItems";
 
 const ShoppingListViewPage = () => {
 	const param = useParams();
@@ -49,6 +50,7 @@ const ShoppingListViewPage = () => {
 
 	const navigate = useNavigate();
 	const modifyItem = useModifyItems();
+
 	const [show, setShow] = useState(false);
 	const [hover, setHover] = useState(false);
 	const [edit, setEdit] = useState(false);
@@ -62,7 +64,8 @@ const ShoppingListViewPage = () => {
 	const [shoppingListData, setShoppingListData] = useState(null);
 	const [isOwner, setIsOwner] = useState(false);
 
-	const [itemList, setItemList] = useState([]);
+	const [initialItemList, setInitialItemList] = useState(null);
+	const [itemList, setItemList] = useState(null);
 
 	const { data, error, loading } = useGetShoppingListById(
 		emptyItem.shoppingListId
@@ -266,18 +269,34 @@ const ShoppingListViewPage = () => {
 		if (data) {
 			setLoadingCompleted(true);
 			setShoppingListData(data.shoppingListById);
-			setItemList(data.shoppingListById.items);
+			setInitialItemList(data.shoppingListById.items);
 			if (user.username === data.shoppingListById.owner.username) {
 				setIsOwner(true);
 			}
 		}
 	}, [navigate, user, loading, data, error]);
 
-	console.log(shoppingListData);
+	const subscription = useSubscribeToItemModified(Number(param.listId));
+
+	useEffect(() => {
+		if (subscription.data) {
+			console.log(subscription.data.itemModified);
+			if (!subscription.loading) {
+				setItemList(subscription.data?.itemModified?.items);
+			}
+		}
+		if (subscription.error) {
+			console.log(subscription.error);
+		}
+		return () => {
+			setItemList(null);
+			setInitialItemList(null);
+		};
+	}, [subscription.data, subscription.loading, subscription.error]);
+
 	return (
 		<>
 			<>
-				{}
 				<TopBar p={" 0 1em 0 0.5em"}>
 					<IconWrapper onClick={() => navigate("/lists")}>
 						<Backbutton title={"Tillbaka"} />
@@ -330,29 +349,58 @@ const ShoppingListViewPage = () => {
 							{loadingCompleted ? (
 								<>
 									<ListContainer>
-										{itemList.map((item) => (
-											<ItemCard
-												key={item.id}
-												{...{
-													name: item.name,
-													quantity: item.quantity,
-													unit: item.unit,
-													isCompleted:
-														item.isCompleted,
-													listId: shoppingListData.id,
-													itemId: item.id,
-													handleEditItem:
-														handleEditItem,
-													handleDeleteItem:
-														handleDeleteItem,
-													handleCheckItem:
-														handleCheckItem,
-												}}
-											/>
-										))}
+										{itemList ? (
+											<>
+												{itemList.map((item) => (
+													<ItemCard
+														key={item.id}
+														{...{
+															name: item.name,
+															quantity:
+																item.quantity,
+															unit: item.unit,
+															isCompleted:
+																item.isCompleted,
+															listId: shoppingListData.id,
+															itemId: item.id,
+															handleEditItem:
+																handleEditItem,
+															handleDeleteItem:
+																handleDeleteItem,
+															handleCheckItem:
+																handleCheckItem,
+														}}
+													/>
+												))}
+											</>
+										) : (
+											<>
+												{initialItemList.map((item) => (
+													<ItemCard
+														key={item.id}
+														{...{
+															name: item.name,
+															quantity:
+																item.quantity,
+															unit: item.unit,
+															isCompleted:
+																item.isCompleted,
+															listId: shoppingListData.id,
+															itemId: item.id,
+															handleEditItem:
+																handleEditItem,
+															handleDeleteItem:
+																handleDeleteItem,
+															handleCheckItem:
+																handleCheckItem,
+														}}
+													/>
+												))}
+											</>
+										)}
 										<div
 											style={{
-												height: "2vh",
+												height: "5vh",
 												width: "100%",
 											}}
 										></div>
