@@ -23,7 +23,6 @@ import {
 } from "./ListStyles";
 
 import ItemCard from "../../components/cards/ItemCard";
-import { ListData } from "../../util/UserLoginTestData";
 import { AnimatePresence } from "framer-motion";
 import {
 	FormDivider,
@@ -37,10 +36,10 @@ import DeleteForm from "../../components/form/forms/DeleteItemForm";
 import ModifyItemForm from "../../components/form/forms/ModifyItemForm";
 import { useGetShoppingListById } from "../../hooks/shoppingLists/useGetShoppingListById";
 import { UserContext } from "../../context/UserContext";
+import { useModifyItems } from "../../hooks/items/useModifyItems";
 
 const ShoppingListViewPage = () => {
 	const param = useParams();
-	const listData = ListData;
 	const emptyItem = {
 		shoppingListId: param.listId,
 		name: "",
@@ -49,6 +48,7 @@ const ShoppingListViewPage = () => {
 	};
 
 	const navigate = useNavigate();
+	const modifyItem = useModifyItems();
 	const [show, setShow] = useState(false);
 	const [hover, setHover] = useState(false);
 	const [edit, setEdit] = useState(false);
@@ -61,6 +61,8 @@ const ShoppingListViewPage = () => {
 	const { user } = useContext(UserContext);
 	const [shoppingListData, setShoppingListData] = useState(null);
 	const [isOwner, setIsOwner] = useState(false);
+
+	const [itemList, setItemList] = useState([]);
 
 	const { data, error, loading } = useGetShoppingListById(
 		emptyItem.shoppingListId
@@ -78,7 +80,7 @@ const ShoppingListViewPage = () => {
 	};
 
 	const handleLeaveModal = (e) => {
-		if (!hover || e.target.id === "cancel") {
+		if (!hover || e.target.id === "cancel" || e.target.id === "confirm") {
 			setShow(false);
 			setItem(emptyItem);
 			setEdit(false);
@@ -105,16 +107,83 @@ const ShoppingListViewPage = () => {
 		console.log("Modify item");
 		if (item.quantity) item.quantity = Number(item.quantity);
 		edit
-			? console.log("Uppdaterar", item)
+			? updateItem(item)
 			: toDelete
-			? console.log("Tar bort", item)
+			? deleteItem(item)
 			: deleteList
 			? console.log("Tar bort listan ", item)
 			: removeCollaborator
 			? console.log("Tar bort kollaboratör", item)
 			: clear
 			? console.log("Rensar listan", item)
-			: console.log("Skapar nytt", item);
+			: addItem(item);
+	};
+
+	const addItem = (currentItem) => {
+		console.log("Skapar nytt", currentItem);
+		modifyItem({
+			variables: {
+				shoppingListItemInput: {
+					shoppingListId: currentItem.shoppingListId,
+					itemInput: {
+						name: currentItem.name,
+						quantity: currentItem.quantity,
+						unit: currentItem.unit,
+					},
+				},
+			},
+		})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	const updateItem = (currentItem) => {
+		console.log("Uppdaterar", currentItem);
+		modifyItem({
+			variables: {
+				itemId: currentItem.itemId,
+				shoppingListItemInput: {
+					shoppingListId: currentItem.shoppingListId,
+					itemInput: {
+						name: currentItem.name,
+						quantity: currentItem.quantity,
+						unit: currentItem.unit,
+					},
+				},
+			},
+		})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	const deleteItem = (currentItem) => {
+		console.log("Tar bort", currentItem);
+		modifyItem({
+			variables: {
+				itemId: currentItem.itemId,
+				removeItem: true,
+				shoppingListItemInput: {
+					shoppingListId: currentItem.shoppingListId,
+					itemInput: {
+						name: currentItem.name,
+					},
+				},
+			},
+		})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	const handleEditItem = (currentItem) => {
@@ -142,6 +211,26 @@ const ShoppingListViewPage = () => {
 
 	const handleCheckItem = (currentItem) => {
 		console.log("Check", currentItem);
+		let input = {
+			name: currentItem.name,
+			isCompleted: currentItem.isCompleted,
+		};
+		console.log(input);
+		modifyItem({
+			variables: {
+				itemId: currentItem.itemId,
+				shoppingListItemInput: {
+					shoppingListId: currentItem.shoppingListId,
+					itemInput: input,
+				},
+			},
+		})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
 	};
 
 	const handleRemoveCollaborator = () => {
@@ -177,6 +266,7 @@ const ShoppingListViewPage = () => {
 		if (data) {
 			setLoadingCompleted(true);
 			setShoppingListData(data.shoppingListById);
+			setItemList(data.shoppingListById.items);
 			if (user.username === data.shoppingListById.owner.username) {
 				setIsOwner(true);
 			}
@@ -240,7 +330,7 @@ const ShoppingListViewPage = () => {
 							{loadingCompleted ? (
 								<>
 									<ListContainer>
-										{shoppingListData.items.map((item) => (
+										{itemList.map((item) => (
 											<ItemCard
 												key={item.id}
 												{...{
@@ -249,7 +339,7 @@ const ShoppingListViewPage = () => {
 													unit: item.unit,
 													isCompleted:
 														item.isCompleted,
-													listId: listData.shoppingListId,
+													listId: shoppingListData.id,
 													itemId: item.id,
 													handleEditItem:
 														handleEditItem,
@@ -262,7 +352,7 @@ const ShoppingListViewPage = () => {
 										))}
 										<div
 											style={{
-												height: "5vh",
+												height: "2vh",
 												width: "100%",
 											}}
 										></div>
@@ -343,10 +433,10 @@ const ShoppingListViewPage = () => {
 															}}
 														/>
 													) : removeCollaborator ? (
-														listData.isOwner ? (
+														isOwner ? (
 															<FormHeading
 																{...{
-																	children: `Vill du kicka ${listData.collaborator.username}?`,
+																	children: `Vill du kicka ${shoppingListData.collaborator.username}?`,
 																}}
 															/>
 														) : (
@@ -357,6 +447,13 @@ const ShoppingListViewPage = () => {
 																}}
 															/>
 														)
+													) : deleteList ? (
+														<FormHeading
+															{...{
+																children:
+																	"Radera listan?",
+															}}
+														/>
 													) : (
 														<FormHeading
 															{...{
@@ -386,6 +483,7 @@ const ShoppingListViewPage = () => {
 														)}
 
 														<WideButtonStyled
+															id={"confirm"}
 															width={
 																"min(300px, 67vw)"
 															}

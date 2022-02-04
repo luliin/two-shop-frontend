@@ -40,6 +40,7 @@ const ItemCard = ({
 					handleCheckItem({
 						shoppingListId: listId,
 						itemId: itemId,
+						name: name,
 						isCompleted: newValue,
 					});
 				}}
@@ -52,7 +53,9 @@ const ItemCard = ({
 			</IconWrapper>
 			<ItemTile>
 				<ItemTitleWrapper>
-					<ItemTitle checked={checked ? "line-through" : ""}>{ `   ${name}   ` }</ItemTitle>
+					<ItemTitle
+						checked={checked ? "line-through" : ""}
+					>{`   ${name}   `}</ItemTitle>
 				</ItemTitleWrapper>
 				<TileDivider />
 
