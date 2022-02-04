@@ -66,6 +66,7 @@ const ShoppingListViewPage = () => {
 
 	const [initialItemList, setInitialItemList] = useState(null);
 	const [itemList, setItemList] = useState(null);
+	const [isNameError, setIsNameError] = useState(false);
 
 	const { data, error, loading } = useGetShoppingListById(
 		emptyItem.shoppingListId
@@ -82,16 +83,30 @@ const ShoppingListViewPage = () => {
 		setShow(!show);
 	};
 
-	const handleLeaveModal = (e) => {
-		if (!hover || e.target.id === "cancel" || e.target.id === "confirm") {
-			setShow(false);
-			setItem(emptyItem);
-			setEdit(false);
-			setToDelete(false);
-			setClear(false);
-			setRemoveCollaborator(false);
-			setDeleteList(false);
+	const validateName = () => {
+		if (item.name.trim().length > 0) {
+			setIsNameError(false);
+			return false;
 		}
+		setIsNameError(true);
+		return true;
+	};
+
+	const handleLeaveModal = (e) => {
+		if (!hover || e.target.id === "cancel") {
+			resetModal();
+		}
+	};
+
+	const resetModal = () => {
+		setShow(false);
+		setItem(emptyItem);
+		setEdit(false);
+		setToDelete(false);
+		setClear(false);
+		setRemoveCollaborator(false);
+		setDeleteList(false);
+		setIsNameError(false);
 	};
 
 	const handleClearList = () => {
@@ -107,7 +122,6 @@ const ShoppingListViewPage = () => {
 
 	const handleModifyItem = (e) => {
 		if (e) e.preventDefault();
-		console.log("Modify item");
 		if (item.quantity) item.quantity = Number(item.quantity);
 		edit
 			? updateItem(item)
@@ -123,29 +137,34 @@ const ShoppingListViewPage = () => {
 	};
 
 	const addItem = (currentItem) => {
-		console.log("Skapar nytt", currentItem);
-		modifyItem({
-			variables: {
-				shoppingListItemInput: {
-					shoppingListId: currentItem.shoppingListId,
-					itemInput: {
-						name: currentItem.name,
-						quantity: currentItem.quantity,
-						unit: currentItem.unit,
+		const isNameEmpty = validateName();
+		console.log(isNameEmpty);
+		if (!isNameEmpty) {
+			resetModal();
+			modifyItem({
+				variables: {
+					shoppingListItemInput: {
+						shoppingListId: currentItem.shoppingListId,
+						itemInput: {
+							name: currentItem.name,
+							quantity: currentItem.quantity,
+							unit: currentItem.unit,
+						},
 					},
 				},
-			},
-		})
-			.then((response) => {
-				console.log(response.data);
 			})
-			.catch((error) => {
-				console.log(error);
-			});
+				.then((response) => {
+					console.log(response.data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
 	};
 
 	const updateItem = (currentItem) => {
 		console.log("Uppdaterar", currentItem);
+		resetModal();
 		modifyItem({
 			variables: {
 				itemId: currentItem.itemId,
@@ -169,6 +188,7 @@ const ShoppingListViewPage = () => {
 
 	const deleteItem = (currentItem) => {
 		console.log("Tar bort", currentItem);
+		resetModal();
 		modifyItem({
 			variables: {
 				itemId: currentItem.itemId,
@@ -286,11 +306,16 @@ const ShoppingListViewPage = () => {
 			}
 		}
 		if (subscription.error) {
-			console.log(subscription.error);
+			if (
+				subscription.error.message !==
+				"Observable cancelled prematurely"
+			) {
+				console.log(subscription.error.message);
+			}
 		}
 		return () => {
 			setItemList(null);
-			setInitialItemList(null);
+			setInitialItemList([]);
 		};
 	}, [subscription.data, subscription.loading, subscription.error]);
 
@@ -524,6 +549,10 @@ const ShoppingListViewPage = () => {
 															<ModifyItemForm
 																{...{
 																	item: item,
+																	isNameError:
+																		isNameError,
+																	setIsNameError:
+																		setIsNameError,
 																	handleCreateItemInput:
 																		handleCreateItemInput,
 																}}
