@@ -26,27 +26,22 @@ const ItemCard = ({
 	handleCheckItem,
 }) => {
 	const theme = useTheme();
-
-	const [checked, setChecked] = useState(isCompleted);
-
 	return (
 		<OuterTileContainer>
 			<IconWrapper
 				bg={theme.colors.lighterBackground}
 				p={"0 0 0 2vw"}
 				onClick={() => {
-					let newValue = !checked;
-					setChecked(newValue);
 					handleCheckItem({
 						shoppingListId: listId,
 						itemId: itemId,
 						name: name,
-						isCompleted: newValue,
+						isCompleted: !isCompleted,
 					});
 				}}
 			>
-				{checked ? (
-					checked && <CheckBoxChecked />
+				{isCompleted ? (
+					isCompleted && <CheckBoxChecked />
 				) : (
 					<CheckBoxUnchecked />
 				)}
@@ -54,7 +49,7 @@ const ItemCard = ({
 			<ItemTile>
 				<ItemTitleWrapper>
 					<ItemTitle
-						checked={checked ? "line-through" : ""}
+						checked={isCompleted ? "line-through" : ""}
 					>{`   ${name}   `}</ItemTitle>
 				</ItemTitleWrapper>
 				<TileDivider />
