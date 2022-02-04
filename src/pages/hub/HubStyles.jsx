@@ -111,6 +111,9 @@ export const ModalContainer = styled(motion.div)`
 	position: fixed;
 	top: 55%;
 	left: 50%;
+	@media (max-width:300px) {
+		height: 65vh;
+	}
 	/* transform: translate(-50%, -50%); */
 `;
 
