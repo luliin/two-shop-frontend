@@ -22,7 +22,9 @@ const GET_SHOPPING_LIST_BY_ID_LIST_VIEW = gql`
 	}
 `;
 
-export const useGetUserShoppingListById = () => {
-	const [{ data }] = useQuery(GET_SHOPPING_LIST_BY_ID_LIST_VIEW);
-	return data?.shoppingListById;
+export const useGetShoppingListById = (shoppingListId) => {
+	const shoppingList = useQuery(GET_SHOPPING_LIST_BY_ID_LIST_VIEW, {
+		variables: { shoppingListId: shoppingListId },
+	});
+	return shoppingList;
 };
