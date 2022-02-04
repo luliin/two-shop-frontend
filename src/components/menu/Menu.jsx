@@ -55,17 +55,24 @@ const Menu = ({ shouldClose }) => {
 						</li>
 						<li>
 							<ListItem>
-								<TextWrapper
-									whileHover={{
-										borderRadius: "2em",
-										boxShadow: "0 0 8px rgb(231, 175, 61)",
-										scale: 1.1,
-										textShadow: "0 0 8px rgb(231,175,61)",
-										letterSpacing: "2px",
-									}}
-								>
-									Mina shoppinglistor
-								</TextWrapper>
+								<Link to={"/lists"}>
+									<TextWrapper
+										whileHover={{
+											borderRadius: "2em",
+											boxShadow:
+												"0 0 8px rgb(231, 175, 61)",
+											scale: 1.1,
+											textShadow:
+												"0 0 8px rgb(231,175,61)",
+											letterSpacing: "2px",
+										}}
+										onClickCapture={() => {
+											setMenu(false);
+										}}
+									>
+										Mina shoppinglistor
+									</TextWrapper>
+								</Link>
 							</ListItem>
 						</li>
 						<li>
@@ -77,6 +84,14 @@ const Menu = ({ shouldClose }) => {
 										scale: 1.1,
 										textShadow: "0 0 8px rgb(231,175,61)",
 										letterSpacing: "2px",
+									}}
+									onClick={() => {
+										alert(
+											"Kontakta twoshopinfo@gmail.com för att ändra dina uppgifter!"
+										);
+									}}
+									onClickCapture={() => {
+										setMenu(false);
 									}}
 								>
 									Inställningar
@@ -101,7 +116,7 @@ const Menu = ({ shouldClose }) => {
 											letterSpacing: "2px",
 										}}
 										onClickCapture={() => {
-											setMenu(false)
+											setMenu(false);
 										}}
 									>
 										Logga in
