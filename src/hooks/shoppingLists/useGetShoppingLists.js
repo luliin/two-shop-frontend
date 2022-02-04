@@ -25,6 +25,7 @@ const USER_SHOPPING_LISTS = gql`
 export const useGetUserShoppingLists = (userId) => {
 	const { data } = useQuery(USER_SHOPPING_LISTS, {
 		variables: { userId: userId },
+		fetchPolicy: "no-cache",
 	});
 	return data?.userById;
 };
