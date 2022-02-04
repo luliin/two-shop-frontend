@@ -248,6 +248,11 @@ const ShoppingListViewPage = () => {
 							.collaborator,
 				});
 			})
+			.then(() => {
+				if (!isOwner) {
+					navigate("/lists");
+				}
+			})
 			.catch((error) => {
 				console.log(error.message);
 			});
@@ -379,6 +384,10 @@ const ShoppingListViewPage = () => {
 			setInitialItemList(data.shoppingListById.items);
 			if (user.username === data.shoppingListById.owner.username) {
 				setIsOwner(true);
+			} else {
+				if (!data.shoppingListById.collaborator) {
+					navigateToHub();
+				}
 			}
 		}
 	}, [navigate, user, loading, data, error]);
