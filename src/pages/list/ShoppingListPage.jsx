@@ -39,6 +39,7 @@ import { UserContext } from "../../context/UserContext";
 import { useModifyItems } from "../../hooks/items/useModifyItems";
 import { useSubscribeToItemModified } from "../../hooks/items/useSubscribeToShoppingListItems";
 import { useRemoveCollaborator } from "../../hooks/shoppingLists/useRemoveCollaborator";
+import { useClearAllItems } from "../../hooks/shoppingLists/useClearAllItems";
 
 const ShoppingListViewPage = () => {
 	const param = useParams();
@@ -52,6 +53,7 @@ const ShoppingListViewPage = () => {
 	const navigate = useNavigate();
 	const modifyItem = useModifyItems();
 	const removeCollaborator = useRemoveCollaborator();
+	const clearItems = useClearAllItems();
 
 	const [show, setShow] = useState(false);
 	const [hover, setHover] = useState(false);
@@ -139,7 +141,6 @@ const ShoppingListViewPage = () => {
 
 	const addItem = (currentItem) => {
 		const isNameEmpty = validateName();
-		console.log(isNameEmpty);
 		if (!isNameEmpty) {
 			resetModal();
 			modifyItem({
@@ -154,9 +155,6 @@ const ShoppingListViewPage = () => {
 					},
 				},
 			})
-				.then((response) => {
-					console.log(response.data);
-				})
 				.catch((error) => {
 					console.log(error);
 				});
@@ -165,7 +163,6 @@ const ShoppingListViewPage = () => {
 
 	const updateItem = (currentItem) => {
 		const isNameEmpty = validateName();
-		console.log(isNameEmpty);
 		if (!isNameEmpty) {
 			resetModal();
 			resetModal();
@@ -240,6 +237,16 @@ const ShoppingListViewPage = () => {
 
 	const clearCurrentList = (currentItem) => {
 		console.log("Rensar listan", currentItem);
+		resetModal();
+		clearItems({
+			variables: { shoppingListId: shoppingListData.id },
+		})
+			.then((response) => {
+				console.log(response.data?.clearAllItems?.message);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	const handleEditItem = (currentItem) => {
@@ -256,7 +263,6 @@ const ShoppingListViewPage = () => {
 
 	const handleDeleteItem = (itemId, name) => {
 		setToDelete(true);
-		console.log(item.shoppingListId, itemId);
 		setItem({
 			shoppingListId: item.shoppingListId,
 			itemId: itemId,
@@ -270,7 +276,6 @@ const ShoppingListViewPage = () => {
 			name: currentItem.name,
 			isCompleted: currentItem.isCompleted,
 		};
-		console.log(input);
 		modifyItem({
 			variables: {
 				itemId: currentItem.itemId,
@@ -279,13 +284,9 @@ const ShoppingListViewPage = () => {
 					itemInput: input,
 				},
 			},
-		})
-			.then((response) => {
-				console.log(response.data);
-			})
-			.catch((error) => {
-				console.log(error.message);
-			});
+		}).catch((error) => {
+			console.log(error.message);
+		});
 	};
 
 	const handleRemoveCollaborator = () => {
@@ -332,7 +333,6 @@ const ShoppingListViewPage = () => {
 
 	useEffect(() => {
 		if (subscription.data) {
-			console.log(subscription.data.itemModified);
 			if (!subscription.loading) {
 				setItemList(subscription.data?.itemModified?.items);
 			}
