@@ -62,9 +62,6 @@ const ItemCard = ({
 					>
 						<EditIcon
 							onClick={() => {
-								console.log(
-									`Uppdaterar produkt ${itemId} från lista ${listId}`
-								);
 								handleEditItem({
 									itemId: itemId,
 									name: name,

@@ -83,8 +83,6 @@ const LoginPage = () => {
 			.catch((e) => {
 				if (e.message === "Unauthorized") {
 					setError(true);
-				} else {
-					console.log("nej");
 				}
 			});
 	};

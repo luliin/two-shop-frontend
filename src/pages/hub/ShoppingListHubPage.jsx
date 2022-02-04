@@ -62,7 +62,6 @@ const ShoppingListHubPage = () => {
 			variables: { createShoppingListInput: createShoppingListInput },
 		})
 			.then((response) => {
-				console.log(response.data.createShoppingList);
 				let id = response.data.createShoppingList.id;
 				navigate(`/lists/${id}`, {
 					state: { id },

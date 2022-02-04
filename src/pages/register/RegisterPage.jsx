@@ -62,8 +62,7 @@ const RegisterPage = () => {
 					appUserInput: userCredentials,
 				},
 			})
-				.then((response) => {
-					console.log(response.data);
+				.then(() => {
 					login({
 						variables: {
 							username: userCredentials.username,
@@ -85,13 +84,11 @@ const RegisterPage = () => {
 						.catch((e) => {
 							if (e.message === "Unauthorized") {
 								setError(true);
-							} else {
-								console.log("nej");
 							}
 						});
 				})
 				.catch((error) => {
-					console.log(error);
+					console.log(error.message);
 				});
 		}
 		console.log(userCredentials);
