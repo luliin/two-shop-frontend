@@ -25,6 +25,7 @@ const GET_SHOPPING_LIST_BY_ID_LIST_VIEW = gql`
 export const useGetShoppingListById = (shoppingListId) => {
 	const shoppingList = useQuery(GET_SHOPPING_LIST_BY_ID_LIST_VIEW, {
 		variables: { shoppingListId: shoppingListId },
+		fetchPolicy: "no-cache",
 	});
 	return shoppingList;
 };
