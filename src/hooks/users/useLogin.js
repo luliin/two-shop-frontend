@@ -13,6 +13,6 @@ const LOGIN = gql`
 `;
 
 export const useLogin = () => {
-	const [login, { data }] = useMutation(LOGIN);
+	const [login] = useMutation(LOGIN);
 	return login;
 };

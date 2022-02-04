@@ -30,15 +30,12 @@ import {
 } from "../../components/input/FormInputStyles";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 
-import { UserHubData } from "../../util/UserLoginTestData";
 import { PlusIcon } from "../list/ListStyles";
 import { IconWrapper } from "../../components/icons/IconWrapper";
 import { UserContext } from "../../context/UserContext";
 import { useGetUserShoppingLists } from "../../hooks/shoppingLists/useGetShoppingLists";
 import authService from "../../services/auth.service";
 import { useCreateShoppingList } from "../../hooks/shoppingLists/useCreateShoppingList";
-
-const hubData = UserHubData;
 
 const ShoppingListHubPage = () => {
 	const navigate = useNavigate();

@@ -10,8 +10,8 @@ import {
 } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { onError } from "@apollo/client/link/error";
-import { print, GraphQLError } from "graphql";
-import { Client, createClient } from "graphql-ws";
+import { print } from "graphql";
+import { createClient } from "graphql-ws";
 import { authHeader } from "../services/auth-header";
 
 class WebSocketLink extends ApolloLink {
@@ -57,14 +57,10 @@ const httpLink = new HttpLink({
 	uri: "https://two-shop.herokuapp.com/graphql",
 });
 
-const errorLink = onError(({ graphQLErrors, networkError, clientErrors }) => {
+const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors)
 		graphQLErrors.forEach(({ message, locations, path }) => {
-			console.log(
-				`[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
-					locations[0]
-				)}, Path: ${path}`
-			);
+			console.log(`GraphQL Error: ${message}`);
 		});
 
 	if (networkError) console.log(`[Network error]: ${networkError}`);
