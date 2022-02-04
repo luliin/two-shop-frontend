@@ -7,7 +7,9 @@ const getCurrentUser = () => {
 	return JSON.parse(sessionStorage.getItem("user")) ?? null;
 };
 
-export default {
+const AuthService = {
 	logout,
 	getCurrentUser,
 };
+
+export default AuthService;

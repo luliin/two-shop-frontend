@@ -9,10 +9,9 @@ import ShoppingListViewPage from "./pages/list/ShoppingListPage";
 import { useEffect, useMemo, useState } from "react";
 import { UserContext } from "./context/UserContext";
 import { MenuContext } from "./context/MenuContext";
-import authService from "./services/auth.service";
+import AuthService from "./services/auth.service";
 
 function App() {
-	const [menuOpen, setMenuOpen] = useState(false);
 	const [shouldClose, setShouldClose] = useState(false);
 	const [user, setUser] = useState(null);
 	const [menu, setMenu] = useState(false);
@@ -26,7 +25,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		setUser(authService.getCurrentUser());
+		setUser(AuthService.getCurrentUser());
 	}, []);
 	return (
 		<>

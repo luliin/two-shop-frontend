@@ -1,7 +1,7 @@
 import React from "react";
 import { UserContainer } from "./AvatarStyles";
 
-const Avatar = ({ username: name, owner: owner }) => {
+const Avatar = ({ username: name, owner }) => {
 	return (
 		<UserContainer
 			mr={owner ? "1vh" : ""}
