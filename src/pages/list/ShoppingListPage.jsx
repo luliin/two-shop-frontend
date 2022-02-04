@@ -40,6 +40,7 @@ import { useModifyItems } from "../../hooks/items/useModifyItems";
 import { useSubscribeToItemModified } from "../../hooks/items/useSubscribeToShoppingListItems";
 import { useRemoveCollaborator } from "../../hooks/shoppingLists/useRemoveCollaborator";
 import { useClearAllItems } from "../../hooks/shoppingLists/useClearAllItems";
+import { useSubscribeToListDeleted } from "../../hooks/shoppingLists/useSubscribeToListDeleted";
 
 const ShoppingListViewPage = () => {
 	const param = useParams();
@@ -154,10 +155,9 @@ const ShoppingListViewPage = () => {
 						},
 					},
 				},
-			})
-				.catch((error) => {
-					console.log(error);
-				});
+			}).catch((error) => {
+				console.log(error);
+			});
 		}
 	};
 
@@ -178,18 +178,13 @@ const ShoppingListViewPage = () => {
 						},
 					},
 				},
-			})
-				.then((response) => {
-					console.log(response.data);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+			}).catch((error) => {
+				console.log(error);
+			});
 		}
 	};
 
 	const deleteItem = (currentItem) => {
-		console.log("Tar bort", currentItem);
 		resetModal();
 		modifyItem({
 			variables: {
@@ -202,13 +197,9 @@ const ShoppingListViewPage = () => {
 					},
 				},
 			},
-		})
-			.then((response) => {
-				console.log(response.data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		}).catch((error) => {
+			console.log(error);
+		});
 	};
 
 	const deleteCurrentList = (currentItem) => {
@@ -236,7 +227,6 @@ const ShoppingListViewPage = () => {
 	};
 
 	const clearCurrentList = (currentItem) => {
-		console.log("Rensar listan", currentItem);
 		resetModal();
 		clearItems({
 			variables: { shoppingListId: shoppingListData.id },
@@ -295,12 +285,13 @@ const ShoppingListViewPage = () => {
 		handleShowModal();
 	};
 
+
 	useEffect(() => {
-		const navigateToHub = () => {
-			navigate("/lists");
-		};
 		const navigateToHome = () => {
 			navigate("/");
+		};
+		const navigateToHub = () => {
+			navigate("/lists");
 		};
 		if (error) {
 			if (error.graphQLErrors[0].message === "Unauthorized") {
@@ -330,6 +321,9 @@ const ShoppingListViewPage = () => {
 	}, [navigate, user, loading, data, error]);
 
 	const subscription = useSubscribeToItemModified(Number(param.listId));
+	const deletedListSubscription = useSubscribeToListDeleted(
+		Number(param.listId)
+	);
 
 	useEffect(() => {
 		if (subscription.data) {
@@ -345,11 +339,26 @@ const ShoppingListViewPage = () => {
 				console.log(subscription.error.message);
 			}
 		}
+		const navigateToHub = () => {
+			navigate("/lists");
+		};
+		if (deletedListSubscription.data) {
+			if (!deletedListSubscription.loading) {
+				navigateToHub();
+			}
+		}
 		return () => {
 			setItemList(null);
 			setInitialItemList([]);
 		};
-	}, [subscription.data, subscription.loading, subscription.error]);
+	}, [
+		subscription.data,
+		subscription.loading,
+		subscription.error,
+		deletedListSubscription.data,
+		deletedListSubscription.loading,
+		navigate,
+	]);
 
 	return (
 		<>
