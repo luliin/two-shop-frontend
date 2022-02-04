@@ -42,6 +42,8 @@ import { useRemoveCollaborator } from "../../hooks/shoppingLists/useRemoveCollab
 import { useClearAllItems } from "../../hooks/shoppingLists/useClearAllItems";
 import { useSubscribeToListDeleted } from "../../hooks/shoppingLists/useSubscribeToListDeleted";
 import { useDeleteShoppingList } from "../../hooks/shoppingLists/useDeleteShoppingList";
+import { InviteCollaboratorForm } from "../../components/form/forms/InviteCollaboratorForm";
+import { useInviteCollaborator } from "../../hooks/shoppingLists/useInviteCollaborator";
 
 const ShoppingListViewPage = () => {
 	const param = useParams();
@@ -55,6 +57,7 @@ const ShoppingListViewPage = () => {
 	const navigate = useNavigate();
 	const modifyItem = useModifyItems();
 	const removeCollaborator = useRemoveCollaborator();
+	const inviteCollaborator = useInviteCollaborator();
 	const clearItems = useClearAllItems();
 	const deleteShoppingList = useDeleteShoppingList();
 
@@ -70,10 +73,14 @@ const ShoppingListViewPage = () => {
 	const { user } = useContext(UserContext);
 	const [shoppingListData, setShoppingListData] = useState(null);
 	const [isOwner, setIsOwner] = useState(false);
+	const [isInviteCollaborator, setIsInviteCollaborator] = useState(false);
+	const [newCollaboratorCredential, setNewCollaboratorCredential] =
+		useState("");
 
 	const [initialItemList, setInitialItemList] = useState(null);
 	const [itemList, setItemList] = useState(null);
 	const [isNameError, setIsNameError] = useState(false);
+	const [isNoSuchUser, setIsNoSuchUser] = useState(false);
 
 	const { data, error, loading } = useGetShoppingListById(
 		emptyItem.shoppingListId
@@ -84,6 +91,10 @@ const ShoppingListViewPage = () => {
 				? Number(e.target.value)
 				: e.target.value;
 		setItem({ ...item, [e.target.name]: value });
+	};
+
+	const handleNewCollaboratorInput = (e) => {
+		setNewCollaboratorCredential(e.target.value);
 	};
 
 	const handleShowModal = () => {
@@ -114,6 +125,9 @@ const ShoppingListViewPage = () => {
 		setIsRemoveCollaborator(false);
 		setDeleteList(false);
 		setIsNameError(false);
+		setIsInviteCollaborator(false);
+		setNewCollaboratorCredential("");
+		setIsNoSuchUser(false);
 	};
 
 	const handleClearList = () => {
@@ -137,6 +151,8 @@ const ShoppingListViewPage = () => {
 			? deleteCurrentList()
 			: isRemoveCollaborator
 			? removeCurrentCollaborator()
+			: isInviteCollaborator
+			? inviteNewCollaborator()
 			: clear
 			? clearCurrentList(item)
 			: addItem(item);
@@ -237,6 +253,38 @@ const ShoppingListViewPage = () => {
 			});
 	};
 
+	const inviteNewCollaborator = () => {
+		console.log(newCollaboratorCredential);
+		if (!newCollaboratorCredential.trim().length > 0) {
+			setIsNameError(true);
+		} else {
+			const handleCollaboratorInput = {
+				shoppingListId: shoppingListData?.id,
+				collaboratorCredential: newCollaboratorCredential,
+			};
+			inviteCollaborator({ variables: { handleCollaboratorInput } })
+				.then((response) => {
+					console.log(response.data);
+					setShoppingListData({
+						...shoppingListData,
+						collaborator:
+							response.data.inviteCollaborator.shoppingList
+								.collaborator,
+					});
+				})
+				.then(() => {
+					resetModal();
+				})
+				.catch((error) => {
+					if (error.message === "No such user") {
+						setIsNoSuchUser(true);
+					} else {
+						console.log(error);
+					}
+				});
+		}
+	};
+
 	const clearCurrentList = (currentItem) => {
 		resetModal();
 		clearItems({
@@ -293,6 +341,11 @@ const ShoppingListViewPage = () => {
 	const handleRemoveCollaborator = () => {
 		setIsRemoveCollaborator(true);
 		setItem({ shoppingListId: item.shoppingListId });
+		handleShowModal();
+	};
+
+	const handleInviteCollaborator = () => {
+		setIsInviteCollaborator(true);
 		handleShowModal();
 	};
 
@@ -408,7 +461,11 @@ const ShoppingListViewPage = () => {
 											</MutedText>
 										)
 									) : (
-										<MutedText>Lägg till partner</MutedText>
+										<MutedText
+											onClick={handleInviteCollaborator}
+										>
+											Lägg till partner
+										</MutedText>
 									)}
 								</PressableText>
 							) : (
@@ -578,6 +635,13 @@ const ShoppingListViewPage = () => {
 																	"Radera listan?",
 															}}
 														/>
+													) : isInviteCollaborator ? (
+														<FormHeading
+															{...{
+																children:
+																	"Bjud in partner",
+															}}
+														/>
 													) : (
 														<FormHeading
 															{...{
@@ -596,6 +660,17 @@ const ShoppingListViewPage = () => {
 														isRemoveCollaborator ||
 														deleteList ? (
 															<DeleteForm />
+														) : isInviteCollaborator ? (
+															<InviteCollaboratorForm
+																{...{
+																	newCollaboratorCredential,
+																	isNameError,
+																	setIsNameError,
+																	isNoSuchUser,
+																	setIsNoSuchUser,
+																	handleNewCollaboratorInput,
+																}}
+															></InviteCollaboratorForm>
 														) : (
 															<ModifyItemForm
 																{...{
