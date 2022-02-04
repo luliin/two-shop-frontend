@@ -41,6 +41,7 @@ import { useSubscribeToItemModified } from "../../hooks/items/useSubscribeToShop
 import { useRemoveCollaborator } from "../../hooks/shoppingLists/useRemoveCollaborator";
 import { useClearAllItems } from "../../hooks/shoppingLists/useClearAllItems";
 import { useSubscribeToListDeleted } from "../../hooks/shoppingLists/useSubscribeToListDeleted";
+import { useDeleteShoppingList } from "../../hooks/shoppingLists/useDeleteShoppingList";
 
 const ShoppingListViewPage = () => {
 	const param = useParams();
@@ -55,6 +56,7 @@ const ShoppingListViewPage = () => {
 	const modifyItem = useModifyItems();
 	const removeCollaborator = useRemoveCollaborator();
 	const clearItems = useClearAllItems();
+	const deleteShoppingList = useDeleteShoppingList();
 
 	const [show, setShow] = useState(false);
 	const [hover, setHover] = useState(false);
@@ -132,7 +134,7 @@ const ShoppingListViewPage = () => {
 			: toDelete
 			? deleteItem(item)
 			: deleteList
-			? deleteCurrentList(item)
+			? deleteCurrentList()
 			: isRemoveCollaborator
 			? removeCurrentCollaborator()
 			: clear
@@ -202,8 +204,17 @@ const ShoppingListViewPage = () => {
 		});
 	};
 
-	const deleteCurrentList = (currentItem) => {
-		console.log("Tar bort listan ", currentItem);
+	const deleteCurrentList = () => {
+		resetModal();
+		deleteShoppingList({
+			variables: { shoppingListId: shoppingListData?.id },
+		})
+			.then((response) => {
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	const removeCurrentCollaborator = () => {
@@ -284,7 +295,6 @@ const ShoppingListViewPage = () => {
 		setItem({ shoppingListId: item.shoppingListId });
 		handleShowModal();
 	};
-
 
 	useEffect(() => {
 		const navigateToHome = () => {
