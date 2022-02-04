@@ -76,6 +76,7 @@ const ShoppingListViewPage = () => {
 	const [isInviteCollaborator, setIsInviteCollaborator] = useState(false);
 	const [newCollaboratorCredential, setNewCollaboratorCredential] =
 		useState("");
+	const [clearMessage, setClearMessage] = useState("");
 
 	const [initialItemList, setInitialItemList] = useState(null);
 	const [itemList, setItemList] = useState(null);
@@ -173,9 +174,13 @@ const ShoppingListViewPage = () => {
 						},
 					},
 				},
-			}).catch((error) => {
-				console.log(error);
-			});
+			})
+				.then(() => {
+					setClearMessage("");
+				})
+				.catch((error) => {
+					console.log(error.message);
+				});
 		}
 	};
 
@@ -197,7 +202,7 @@ const ShoppingListViewPage = () => {
 					},
 				},
 			}).catch((error) => {
-				console.log(error);
+				console.log(error.message);
 			});
 		}
 	};
@@ -216,7 +221,7 @@ const ShoppingListViewPage = () => {
 				},
 			},
 		}).catch((error) => {
-			console.log(error);
+			console.log(error.message);
 		});
 	};
 
@@ -224,13 +229,9 @@ const ShoppingListViewPage = () => {
 		resetModal();
 		deleteShoppingList({
 			variables: { shoppingListId: shoppingListData?.id },
-		})
-			.then((response) => {
-				console.log(response.data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		}).catch((error) => {
+			console.log(error.message);
+		});
 	};
 
 	const removeCurrentCollaborator = () => {
@@ -259,7 +260,6 @@ const ShoppingListViewPage = () => {
 	};
 
 	const inviteNewCollaborator = () => {
-		console.log(newCollaboratorCredential);
 		if (!newCollaboratorCredential.trim().length > 0) {
 			setIsNameError(true);
 		} else {
@@ -269,7 +269,6 @@ const ShoppingListViewPage = () => {
 			};
 			inviteCollaborator({ variables: { handleCollaboratorInput } })
 				.then((response) => {
-					console.log(response.data);
 					setShoppingListData({
 						...shoppingListData,
 						collaborator:
@@ -296,7 +295,7 @@ const ShoppingListViewPage = () => {
 			variables: { shoppingListId: shoppingListData.id },
 		})
 			.then((response) => {
-				console.log(response.data?.clearAllItems?.message);
+				setClearMessage(response.data?.clearAllItems?.message);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -491,6 +490,9 @@ const ShoppingListViewPage = () => {
 							{loadingCompleted ? (
 								<>
 									<ListContainer>
+										{clearMessage && (
+											<div>{clearMessage}</div>
+										)}
 										{itemList ? (
 											<>
 												{itemList.map((item) => (
