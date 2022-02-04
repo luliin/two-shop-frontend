@@ -38,6 +38,7 @@ import { useGetShoppingListById } from "../../hooks/shoppingLists/useGetShopping
 import { UserContext } from "../../context/UserContext";
 import { useModifyItems } from "../../hooks/items/useModifyItems";
 import { useSubscribeToItemModified } from "../../hooks/items/useSubscribeToShoppingListItems";
+import { useRemoveCollaborator } from "../../hooks/shoppingLists/useRemoveCollaborator";
 
 const ShoppingListViewPage = () => {
 	const param = useParams();
@@ -50,6 +51,7 @@ const ShoppingListViewPage = () => {
 
 	const navigate = useNavigate();
 	const modifyItem = useModifyItems();
+	const removeCollaborator = useRemoveCollaborator();
 
 	const [show, setShow] = useState(false);
 	const [hover, setHover] = useState(false);
@@ -57,7 +59,7 @@ const ShoppingListViewPage = () => {
 	const [toDelete, setToDelete] = useState(false);
 	const [loadingCompleted, setLoadingCompleted] = useState(false);
 	const [clear, setClear] = useState(false);
-	const [removeCollaborator, setRemoveCollaborator] = useState(false);
+	const [isRemoveCollaborator, setIsRemoveCollaborator] = useState(false);
 	const [item, setItem] = useState(emptyItem);
 	const [deleteList, setDeleteList] = useState(false);
 	const { user } = useContext(UserContext);
@@ -104,7 +106,7 @@ const ShoppingListViewPage = () => {
 		setEdit(false);
 		setToDelete(false);
 		setClear(false);
-		setRemoveCollaborator(false);
+		setIsRemoveCollaborator(false);
 		setDeleteList(false);
 		setIsNameError(false);
 	};
@@ -115,7 +117,6 @@ const ShoppingListViewPage = () => {
 	};
 
 	const handleDeleteList = () => {
-		console.log(`Tar bort lista ${item.shoppingListId}`);
 		setDeleteList(true);
 		handleShowModal();
 	};
@@ -128,11 +129,11 @@ const ShoppingListViewPage = () => {
 			: toDelete
 			? deleteItem(item)
 			: deleteList
-			? console.log("Tar bort listan ", item)
-			: removeCollaborator
-			? console.log("Tar bort kollaboratör", item)
+			? deleteCurrentList(item)
+			: isRemoveCollaborator
+			? removeCurrentCollaborator()
 			: clear
-			? console.log("Rensar listan", item)
+			? clearCurrentList(item)
 			: addItem(item);
 	};
 
@@ -163,27 +164,31 @@ const ShoppingListViewPage = () => {
 	};
 
 	const updateItem = (currentItem) => {
-		console.log("Uppdaterar", currentItem);
-		resetModal();
-		modifyItem({
-			variables: {
-				itemId: currentItem.itemId,
-				shoppingListItemInput: {
-					shoppingListId: currentItem.shoppingListId,
-					itemInput: {
-						name: currentItem.name,
-						quantity: currentItem.quantity,
-						unit: currentItem.unit,
+		const isNameEmpty = validateName();
+		console.log(isNameEmpty);
+		if (!isNameEmpty) {
+			resetModal();
+			resetModal();
+			modifyItem({
+				variables: {
+					itemId: currentItem.itemId,
+					shoppingListItemInput: {
+						shoppingListId: currentItem.shoppingListId,
+						itemInput: {
+							name: currentItem.name,
+							quantity: currentItem.quantity,
+							unit: currentItem.unit,
+						},
 					},
 				},
-			},
-		})
-			.then((response) => {
-				console.log(response.data);
 			})
-			.catch((error) => {
-				console.log(error);
-			});
+				.then((response) => {
+					console.log(response.data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
 	};
 
 	const deleteItem = (currentItem) => {
@@ -207,6 +212,34 @@ const ShoppingListViewPage = () => {
 			.catch((error) => {
 				console.log(error);
 			});
+	};
+
+	const deleteCurrentList = (currentItem) => {
+		console.log("Tar bort listan ", currentItem);
+	};
+
+	const removeCurrentCollaborator = () => {
+		let handleCollaboratorInput = {
+			shoppingListId: shoppingListData?.id,
+			collaboratorCredential: shoppingListData?.collaborator?.username,
+		};
+		resetModal();
+		removeCollaborator({ variables: { handleCollaboratorInput } })
+			.then((response) => {
+				setShoppingListData({
+					...shoppingListData,
+					collaborator:
+						response.data.removeCollaborator.shoppingList
+							.collaborator,
+				});
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
+	};
+
+	const clearCurrentList = (currentItem) => {
+		console.log("Rensar listan", currentItem);
 	};
 
 	const handleEditItem = (currentItem) => {
@@ -233,7 +266,6 @@ const ShoppingListViewPage = () => {
 	};
 
 	const handleCheckItem = (currentItem) => {
-		console.log("Check", currentItem);
 		let input = {
 			name: currentItem.name,
 			isCompleted: currentItem.isCompleted,
@@ -257,7 +289,7 @@ const ShoppingListViewPage = () => {
 	};
 
 	const handleRemoveCollaborator = () => {
-		setRemoveCollaborator(true);
+		setIsRemoveCollaborator(true);
 		setItem({ shoppingListId: item.shoppingListId });
 		handleShowModal();
 	};
@@ -505,11 +537,11 @@ const ShoppingListViewPage = () => {
 																	"Töm listan?",
 															}}
 														/>
-													) : removeCollaborator ? (
+													) : isRemoveCollaborator ? (
 														isOwner ? (
 															<FormHeading
 																{...{
-																	children: `Vill du kicka ${shoppingListData.collaborator.username}?`,
+																	children: `Vill du kicka ${shoppingListData.collaborator?.username}?`,
 																}}
 															/>
 														) : (
@@ -542,7 +574,7 @@ const ShoppingListViewPage = () => {
 													>
 														{toDelete ||
 														clear ||
-														removeCollaborator ||
+														isRemoveCollaborator ||
 														deleteList ? (
 															<DeleteForm />
 														) : (
