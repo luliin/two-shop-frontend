@@ -13,7 +13,7 @@ export const InputField = styled.input.attrs(({ type }) => ({
 	font-family: "Barlow Condensed", sans-serfif;
 	font-size: 1em;
 
-	@media(min-width: 768px) {
+	@media (min-width: 768px) {
 		margin: 1em 0;
 	}
 `;
@@ -38,8 +38,8 @@ export const Select = styled.select.attrs(({ value }) => ({
 		background: ${({ theme }) => theme.colors.lighterBackground};
 	}
 
-	@media(min-width: 768px) {
-		margin:  1em 0;
+	@media (min-width: 768px) {
+		margin: 1em 0;
 	}
 `;
 

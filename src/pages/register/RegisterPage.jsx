@@ -150,6 +150,7 @@ const RegisterPage = () => {
 								<InputField
 									autoComplete="email"
 									type="email"
+									inputMode={"email"}
 									placeholder={"E-post"}
 									name="email"
 									required

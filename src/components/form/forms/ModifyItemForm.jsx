@@ -50,6 +50,9 @@ const ModifyItemForm = ({
 					width={"min(260px, 56vw)"}
 					autoComplete="off"
 					type="number"
+					inputMode={"decimal"}
+					step="0.01"
+					maxLength={6}
 					placeholder={"Antal"}
 					name="quantity"
 					required
