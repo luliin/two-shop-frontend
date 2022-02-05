@@ -118,9 +118,18 @@ export const FormDivider = styled.div`
 
 export const StrongText = styled(motion.span)`
 	color: ${({ theme }) => theme.colors.purpleTextColor};
+	margin: ${({ margin }) => (margin ? margin : "")};
 	font-weight: ${({ fw }) => (fw ? fw : "")};
+
+	@media (min-width: 768px) {
+		margin: 0;
+	}
 `;
 
 export const NormalText = styled.span`
 	color: ${({ theme }) => theme.colors.lightText};
+	margin: ${({ margin }) => (margin ? margin : "")};
+	@media (min-width: 768px) {
+		margin: 0;
+	}
 `;

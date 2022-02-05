@@ -8,6 +8,7 @@ import {
 	FormHeading,
 	FormStyled,
 	InputRow,
+	NormalText,
 	OuterContainer,
 	PasswordIcon,
 	StrongText,
@@ -151,16 +152,22 @@ const LoginPage = () => {
 							</WideButtonStyled>
 						</FormStyled>
 						<InputRow
+							margin={"0 1em"}
 							cursor={"pointer"}
 							onClick={() => alert("Maila twoshopinfo@gmail.com")}
 						>
 							Glömt ditt lösenord?
 						</InputRow>
 						<FormDivider mt={"20px"} mb={"1em"} />
-						<InputRow gap={"5px"} pb={"2em"}>
-							Inget konto?
+						<InputRow gap={"10px"} pb={"2em"}>
+							<NormalText margin={"0 0.2em"}>
+								Inget konto?
+							</NormalText>
+
 							<Link to={"/register"}>
-								<StrongText>Registrera dig här</StrongText>
+								<StrongText margin={"0 0.2em"}>
+									Registrera dig här
+								</StrongText>
 							</Link>
 						</InputRow>
 					</FormContainer>

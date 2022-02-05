@@ -10,6 +10,7 @@ import {
 	FormStyled,
 	IdIcon,
 	InputRow,
+	NormalText,
 	OuterContainer,
 	PasswordIcon,
 	StrongText,
@@ -100,6 +101,7 @@ const RegisterPage = () => {
 					<FormContainer height={"90%"} mt={"0"} mb={"0"}>
 						<FormHeading mt={"1em"}>Skapa konto</FormHeading>
 						<FormStyled
+							padding={"1rem 1rem 0"}
 							onSubmit={handleSubmit}
 							onFocus={() => {
 								setError(false);
@@ -190,11 +192,16 @@ const RegisterPage = () => {
 								{"Registrera dig"}
 							</WideButtonStyled>
 						</FormStyled>
-						<FormDivider mt={"1px"} mb={"10px"} />
-						<InputRow gap={"5px"} pb={"1.5em"}>
-							Redan medlem?
+						<FormDivider mt={"1px"} mb={"1em"} />
+						<InputRow gap={"10px"} pb={"2em"}>
+							<NormalText margin={"0 0.2em"}>
+								Redan medlem?
+							</NormalText>
+
 							<Link to={"/login"}>
-								<StrongText>Logga in</StrongText>
+								<StrongText margin={"0 0.2em"}>
+									Logga in
+								</StrongText>
 							</Link>
 						</InputRow>
 					</FormContainer>
