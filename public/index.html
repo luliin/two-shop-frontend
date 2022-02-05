@@ -12,6 +12,13 @@
 		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
 		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 		<title>TwoShop - en plattform för kollaborativa shoppinglistor</title>
+		<script>
+			let viewport = document.querySelector("meta[name=viewport]");
+			viewport.setAttribute(
+				"content",
+				viewport.content + ", height=" + window.innerHeight
+			);
+		</script>
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>

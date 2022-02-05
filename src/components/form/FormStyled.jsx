@@ -36,7 +36,6 @@ export const FormContainer = styled.div`
 	align-items: center;
 	box-shadow: ${({ theme }) => theme.effects.shadow};
 	border-radius: 0 5em 0 5em;
-	height: 60%;
 	height: ${({ height }) => (height ? height : "60%")};
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
 	margin-top: ${({ mt }) => (mt ? mt : "10%")};

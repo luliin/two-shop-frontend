@@ -92,7 +92,6 @@ const RegisterPage = () => {
 					console.log(error.message);
 				});
 		}
-		console.log(userCredentials);
 	};
 	return (
 		<>

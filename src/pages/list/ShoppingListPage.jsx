@@ -221,9 +221,15 @@ const ShoppingListViewPage = () => {
 					},
 				},
 			},
-		}).catch((error) => {
-			console.log(error.message);
-		});
+		})
+			.then((response) => {
+				if (response.data?.modifyShoppingListItems.items.length === 0) {
+					setClearMessage("Listan är tom!");
+				}
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
 	};
 
 	const deleteCurrentList = () => {
@@ -400,7 +406,12 @@ const ShoppingListViewPage = () => {
 	useEffect(() => {
 		if (subscription.data) {
 			if (!subscription.loading) {
-				setItemList(subscription.data?.itemModified?.items);
+				let currentItems = subscription.data?.itemModified?.items;
+				if (clearMessage && currentItems.length === 0) {
+					setItemList(currentItems);
+				} else if (!clearMessage && currentItems.length > 0) {
+					setItemList(currentItems);
+				}
 			}
 		}
 		if (subscription.error) {
@@ -429,6 +440,7 @@ const ShoppingListViewPage = () => {
 		subscription.error,
 		deletedListSubscription.data,
 		deletedListSubscription.loading,
+		clearMessage,
 		navigate,
 	]);
 
@@ -584,7 +596,7 @@ const ShoppingListViewPage = () => {
 												onClick={handleLeaveModal}
 											>
 												<ModalContainer
-													height={"65%"}
+													height={"max(65%, 600px)"}
 													exit={{ y: "-200vh" }}
 													key="modal"
 													initial={{

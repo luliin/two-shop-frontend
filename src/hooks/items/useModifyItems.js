@@ -11,7 +11,9 @@ const MODIFY_SHOPPING_LIST_ITEMS = gql`
 			removeItem: $removeItem
 			itemId: $itemId
 		) {
-			name
+			items {
+				id
+			}
 		}
 	}
 `;

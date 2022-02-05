@@ -30,12 +30,13 @@ import {
 } from "../../components/input/FormInputStyles";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 
-import { PlusIcon } from "../list/ListStyles";
+import { PlusIcon, PressableText } from "../list/ListStyles";
 import { IconWrapper } from "../../components/icons/IconWrapper";
 import { UserContext } from "../../context/UserContext";
 import { useGetUserShoppingLists } from "../../hooks/shoppingLists/useGetShoppingLists";
 import AuthService from "../../services/auth.service";
 import { useCreateShoppingList } from "../../hooks/shoppingLists/useCreateShoppingList";
+import { Theme } from "../../components/app/AppStyles";
 
 const ShoppingListHubPage = () => {
 	const navigate = useNavigate();
@@ -51,13 +52,19 @@ const ShoppingListHubPage = () => {
 		setShow(!show);
 	};
 
+	const closeModal = () => {
+		setShow(false);
+		setCollaboratorCredential("");
+		setListName("");
+		setHover(false);
+	};
+
 	const handleCreateShoppingList = (e) => {
 		e.preventDefault();
 		let createShoppingListInput = {
 			name: listName,
 			collaboratorCredential: collaboratorCredential,
 		};
-		console.log(createShoppingListInput);
 		createShoppingList({
 			variables: { createShoppingListInput: createShoppingListInput },
 		})
@@ -167,6 +174,7 @@ const ShoppingListHubPage = () => {
 									}}
 								>
 									<ModalContainer
+										height={"max(55%, 400px)"}
 										exit={{ y: "-200vh" }}
 										key="modal"
 										initial={{
@@ -186,7 +194,7 @@ const ShoppingListHubPage = () => {
 											setHover(false);
 										}}
 									>
-										<FormHeading>
+										<FormHeading mt={"0px"}>
 											Skapa ny lista
 										</FormHeading>
 										<FormStyled
@@ -254,15 +262,27 @@ const ShoppingListHubPage = () => {
 												{"Bekräfta"}
 											</WideButtonStyled>
 										</FormStyled>
-										<FormDivider
-											mt={"0.3em"}
-											mb={"20px"}
-											width={"min(300px, 67vw)"}
-										/>
 										<InputRow>
 											Du kan även bjuda in någon till
 											listan senare!
 										</InputRow>
+										<FormDivider
+											mt={"0.6em"}
+											mb={"0.3em"}
+											width={"min(300px, 67vw)"}
+										/>
+										<PressableText
+											whileHover={{
+												scale: 1.1,
+												textShadow: Theme.effects.glow(
+													Theme.colors.yellowDetails
+												),
+											}}
+											id={"cancel"}
+											onClick={closeModal}
+										>
+											Avbryt
+										</PressableText>
 									</ModalContainer>
 								</Model>
 							)}
