@@ -7,7 +7,10 @@ export const HomeContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	overflow-x: hidden;
-	height: 90vh;
+	height: calc(80vh - 65px);
+	@media (min-width: 768px) {
+		height: calc(100vh - 65px);
+	}
 `;
 
 export const Header = styled.div`
@@ -54,14 +57,14 @@ export const SmallSplashText = styled.div`
 	max-width: 95%;
 	color: ${({ theme }) => theme.colors.deleteRed};
 	padding: 1em 10px;
-	height: 10vh;
+	height: 7%;
 	font-size: 0.9em;
 `;
 
 export const HomeHeadingContainer = styled(motion.div)`
 	margin-top: 2vh;
 	margin-bottom: 5vh;
-	height: 50vh;
+	height: 50%;
 	width: 90%;
 	background: ${({ theme }) => theme.colors.lighterBackground};
 	border-radius: 0 5em 0 5em;
@@ -70,7 +73,15 @@ export const HomeHeadingContainer = styled(motion.div)`
 	align-items: center;
 	justify-content: center;
 	box-shadow: ${({ theme }) => theme.effects.shadow};
-	/* padding: 3em 0; */
+	@media (max-width: 400) {
+		margin-top: 0px;
+	}
+	@media (min-width: 768px) {
+		height: 60vh;
+		margin-top: 4vh;
+		margin-bottom: 2vh;
+		width: 80%;
+	}
 `;
 
 export const Wrapper = styled.div`
@@ -105,7 +116,7 @@ export const RegisterButton = styled(motion.button)`
 `;
 
 export const MemberContainer = styled(motion.div)`
-	height: 10vh;
+	height: 7%;
 	width: 90%;
 	display: flex;
 	align-items: center;
@@ -114,14 +125,19 @@ export const MemberContainer = styled(motion.div)`
 		text-decoration: dashed;
 		text-decoration-color: white;
 	}
+
+	@media (min-width: 768px) {
+		height: 10vh;
+	}
 `;
 
 export const MemberDefaultText = styled.div`
 	font-family: "Barlow Condensed", sans-serif;
 	font-size: 24px;
-	padding: 0 5px;
-	@media (max-width: 300px){
+	padding: 0 10px;
+	@media (max-width: 300px) {
 		font-size: 20px;
+		padding: 0 5px;
 	}
 `;
 

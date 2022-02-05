@@ -1,18 +1,62 @@
 import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
+import { TiSortNumerically } from "react-icons/ti";
 import {
+	RiAddLine,
 	RiCheckboxBlankLine,
 	RiCheckboxLine,
 	RiDeleteBinLine,
 	RiEdit2Line,
+	RiPencilRuler2Line,
 } from "react-icons/ri";
+import { motion } from "framer-motion";
 
 export const Backbutton = styled(FaChevronLeft)`
 	font-size: 24px;
 `;
 
-export const RemoveText = styled.h4`
+export const MutedText = styled.h4`
 	color: ${({ theme }) => theme.colors.darkDetails};
+	font-size: 0.9em;
+`;
+
+export const ListTitle = styled.h4`
+	color: ${({ theme }) => theme.colors.purpleTextColor};
+`;
+
+export const PressableText = styled(motion.div)`
+	cursor: pointer;
+`;
+export const TitleWrapper = styled.div`
+	width: clamp(35vw, 65%, 1000px);
+	height: min(50px, 4vh);
+	overflow-wrap: anywhere;
+	overflow-x: hidden;
+	overflow: auto;
+
+	padding: 6px 0 0 calc(calc(100vw - 1000px) / 2);
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		background: ${({ theme }) => theme.colors.lighterBackground};
+		/* scrollbar-color: ${({ theme }) => theme.colors.lightText}; */
+		width: 0.5rem;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: ${({ theme }) => theme.colors.darkDetails};
+		border-radius: 5em;
+	}
+	@media (max-width: 768px) {
+		padding-left: 0.5em;
+		padding-top: 4px;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+	@media (max-width: 300px) {
+		width: 40vw;
+	}
 `;
 
 export const ListContainer = styled.div`
@@ -26,6 +70,10 @@ export const ListContainer = styled.div`
 	column-gap: 1vw;
 	row-gap: 1vh;
 	@media (max-width: 560px) {
+		height: 100%;
+		row-gap: 2vh;
+	}
+	@media (min-width: 560px) {
 		height: 100%;
 		row-gap: 2vh;
 	}
@@ -58,8 +106,8 @@ export const OuterTileContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	border-radius: 1em;
-	background: ${({theme})=> theme.colors.lighterBackground};
-	box-shadow: ${({theme})=> theme.effects.shadow};
+	background: ${({ theme }) => theme.colors.lighterBackground};
+	box-shadow: ${({ theme }) => theme.effects.shadow};
 `;
 
 export const ItemTitleWrapper = styled.div`
@@ -86,6 +134,7 @@ export const ItemTitleWrapper = styled.div`
 export const ItemTitle = styled.p`
 	margin: 1vh 10px 0 10px;
 	overflow-wrap: anywhere;
+	text-decoration: ${({ checked }) => (checked ? checked : "")};
 	@media (max-width: 389px) {
 		margin-top: 0.5em;
 	}
@@ -111,7 +160,7 @@ export const TileRow = styled(ItemTitleWrapper)`
 
 export const TrashIcon = styled(RiDeleteBinLine)`
 	font-size: 24px;
-	color: ${({ theme }) => theme.colors.deleteRed};
+	color: ${({ theme, color }) => (color ? color : theme.colors.deleteRed)};
 `;
 
 export const EditIcon = styled(RiEdit2Line)`
@@ -127,4 +176,24 @@ export const CheckBoxChecked = styled(RiCheckboxLine)`
 export const CheckBoxUnchecked = styled(RiCheckboxBlankLine)`
 	font-size: 24px;
 	color: ${({ theme }) => theme.colors.darkDetails};
+`;
+
+export const QuantityIcon = styled(TiSortNumerically)`
+	font-size: 24px;
+`;
+
+export const UnitIcon = styled(RiPencilRuler2Line)`
+	font-size: 24px;
+`;
+
+export const PlusIcon = styled(RiAddLine)`
+	font-size: 24px;
+`;
+
+export const LastTilePadding = styled.div`
+	height: 70px;
+	width: 100%;
+	@media (min-width: 768px) {
+		display: none;
+	}
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTheme } from "styled-components";
 import {
 	CheckBoxChecked,
@@ -14,29 +14,43 @@ import {
 } from "../../pages/list/ListStyles";
 import { IconWrapper } from "../icons/IconWrapper";
 
-const ItemCard = ({ listId, itemId, name, quantity, unit, isCompleted }) => {
+const ItemCard = ({
+	listId,
+	itemId,
+	name,
+	quantity,
+	unit,
+	isCompleted,
+	handleEditItem,
+	handleDeleteItem,
+	handleCheckItem,
+}) => {
 	const theme = useTheme();
-
-	const [checked, setChecked] = useState(isCompleted);
-
 	return (
 		<OuterTileContainer>
 			<IconWrapper
 				bg={theme.colors.lighterBackground}
 				p={"0 0 0 2vw"}
 				onClick={() => {
-					setChecked(!checked);
+					handleCheckItem({
+						shoppingListId: listId,
+						itemId: itemId,
+						name: name,
+						isCompleted: !isCompleted,
+					});
 				}}
 			>
-				{checked ? (
-					checked && <CheckBoxChecked />
+				{isCompleted ? (
+					isCompleted && <CheckBoxChecked />
 				) : (
 					<CheckBoxUnchecked />
 				)}
 			</IconWrapper>
 			<ItemTile>
 				<ItemTitleWrapper>
-					<ItemTitle>{name}</ItemTitle>
+					<ItemTitle
+						checked={isCompleted ? "line-through" : ""}
+					>{`   ${name}   `}</ItemTitle>
 				</ItemTitleWrapper>
 				<TileDivider />
 
@@ -48,9 +62,12 @@ const ItemCard = ({ listId, itemId, name, quantity, unit, isCompleted }) => {
 					>
 						<EditIcon
 							onClick={() => {
-								console.log(
-									`Uppdaterar produkt ${itemId} från lista ${listId}`
-								);
+								handleEditItem({
+									itemId: itemId,
+									name: name,
+									quantity: quantity,
+									unit: unit,
+								});
 							}}
 						/>
 					</IconWrapper>
@@ -60,9 +77,7 @@ const ItemCard = ({ listId, itemId, name, quantity, unit, isCompleted }) => {
 			<IconWrapper bg={theme.colors.lighterBackground} p={"0 2vw 0 0"}>
 				<TrashIcon
 					onClick={() => {
-						console.log(
-							`Tar bort produkt ${itemId} från lista ${listId}`
-						);
+						handleDeleteItem(itemId, name);
 					}}
 				/>
 			</IconWrapper>

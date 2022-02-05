@@ -29,7 +29,6 @@ export const OuterContainer = styled.div`
 		background: ${({ theme }) => theme.colors.lighterBackground};
 		/* scrollbar-color: ${({ theme }) => theme.colors.lightText}; */
 		width: 0.5rem;
-		
 	}
 
 	&::-webkit-scrollbar-thumb {
@@ -41,6 +40,13 @@ export const OuterContainer = styled.div`
 			display: none;
 			/* height: 0.5rem;  */
 		}
+	}
+	@media (max-width: 400px) {
+		height: calc(90vh - min(200px, 20vh));
+	}
+	@media (max-width: 280px) {
+		height: ${({ xsheight }) =>
+			xsheight ? xsheight : "calc(100vh - min(135px, 14vh))"};
 	}
 `;
 
@@ -83,7 +89,8 @@ export const RoundButton = styled(motion.button)`
 	font-size: 24px;
 	cursor: pointer;
 	bottom: 1em;
-	right: 15%;
+	right: ${({ right }) => (right ? right : "15%")};
+	left: ${({ left }) => (left ? left : "")};
 `;
 
 export const Model = styled(motion.div)`
@@ -104,12 +111,27 @@ export const ModalContainer = styled(motion.div)`
 	align-items: center;
 	box-shadow: ${({ theme }) => theme.effects.shadow};
 	border-radius: 0 5em 0 5em;
-	height: 60vh;
-	height: ${({ height }) => (height ? height : "60vh")};
+	height: ${({ height }) => (height ? height : "60%")};
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
-	width: min(500px, 80vw);
+	width: min(500px, 95vw);
 	position: fixed;
-	top: 55%;
+	top: 50%;
 	left: 50%;
+	@media (max-width: 300px) {
+		height: 65%;
+	}
 	/* transform: translate(-50%, -50%); */
+`;
+
+export const EmptyListContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 60vh;
+	text-align: center;
+	h2 {
+		color: ${({ theme }) => theme.colors.yellowDetails};
+		margin-bottom: 3vh;
+	}
 `;

@@ -12,13 +12,14 @@ import {
 
 import Avatar from "./../avatar/Avatar";
 
-const ShoppingListCard = ({id, name, isOwner, owner, collaborator}) => {
-
+const ShoppingListCard = ({ id, name, isOwner, owner, collaborator }) => {
 	let navigate = useNavigate();
 
 	const handleCardClick = () => {
-		navigate(`/lists/${id}`)
-	}
+		navigate(`/lists/${id}`, {
+			state: { id },
+		});
+	};
 
 	return (
 		<ListCard

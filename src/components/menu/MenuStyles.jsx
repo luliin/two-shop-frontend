@@ -18,6 +18,10 @@ export const MenuContainer = styled(motion.div)`
 		border-radius: 0;
 		width: 100vw;
 	}
+	a {
+		text-decoration: none;
+		color: ${({ theme }) => theme.colors.lightText};
+	}
 `;
 
 export const MenuList = styled(motion.ul)`

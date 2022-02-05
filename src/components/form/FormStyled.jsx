@@ -18,9 +18,15 @@ export const FormStyled = styled.form`
 `;
 
 export const OuterContainer = styled.div`
+	padding-top: max(10%, 50px);
+	padding-bottom: max(10%, 50px);
+	min-height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	@media (min-width: 768px) {
+		padding-top: 10vh;
+	}
 `;
 
 export const FormContainer = styled.div`
@@ -30,19 +36,30 @@ export const FormContainer = styled.div`
 	align-items: center;
 	box-shadow: ${({ theme }) => theme.effects.shadow};
 	border-radius: 0 5em 0 5em;
-	height: 60vh;
-	height: ${({ height }) => (height ? height : "60vh")};
+	height: 60%;
+	height: ${({ height }) => (height ? height : "60%")};
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
-	margin-top: 10vh;
-	width: 90vw;
+	margin-top: ${({ mt }) => (mt ? mt : "10%")};
+	margin-bottom: ${({ mt }) => (mt ? mt : "5%")};
+	width: 95vw;
+	@media (min-width: 768px) {
+		margin-top: 3%;
+		width: 60vw;
+		height: ${({ height }) => (height ? height : "60vh")};
+	}
 `;
 
 export const FormHeading = styled.h1`
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
+	margin-top: ${({ mt }) => (mt ? mt : "0.2em")};
+	text-align: center;
 	&:hover {
 		text-shadow: ${({ theme }) =>
 			theme.effects.glow(theme.colors.deleteRed)};
 		cursor: pointer;
+	}
+	@media (max-width: 300px) {
+		font-size: 1.5em;
 	}
 `;
 
@@ -77,6 +94,7 @@ export const InputRow = styled.div`
 	gap: ${({ gap }) => (gap ? gap : "1em")};
 	font-weight: ${({ fw }) => (fw ? fw : "")};
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
+	margin-top: ${({ mt }) => (mt ? mt : "")};
 	padding-bottom: ${({ pb }) => (pb ? pb : "")};
 	font-family: "Barlow Condensed", sans-serif;
 	color: ${({ color }) => (color ? color : "")};
@@ -100,9 +118,18 @@ export const FormDivider = styled.div`
 
 export const StrongText = styled(motion.span)`
 	color: ${({ theme }) => theme.colors.purpleTextColor};
+	margin: ${({ margin }) => (margin ? margin : "")};
 	font-weight: ${({ fw }) => (fw ? fw : "")};
+
+	@media (min-width: 768px) {
+		margin: 0;
+	}
 `;
 
 export const NormalText = styled.span`
 	color: ${({ theme }) => theme.colors.lightText};
+	margin: ${({ margin }) => (margin ? margin : "")};
+	@media (min-width: 768px) {
+		margin: 0;
+	}
 `;

@@ -1,7 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed:ital,wght@0,400;0,600;1,300&display=swap");
+root {
+	--blue-text-color: #8182f9;
+	--blue-button-color: #6261f3;
+	--puple-text-color: #7475ee;
+	--darkest-bakground: #111025;
+	--dark-background: #181831;
+	--delete-red: #dd5182;
+	--dark-details: #43437c;
+	--yellow-details: rgb(231, 175, 61); /*#e7af3d*/
+	--glow: 0 0 8px #e7af3d;
+}
 
 html {
-	height: 100vh;
+	height: 100%;
 }
 * {
 	margin: 0;
@@ -17,24 +28,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	overflow: hidden;
 	color: #efeff4;
+	min-height: 100%;
+	background: #111025;
 }
-
-
-
-
 
 .button-color {
 	color: #6261f3;
-}
-
-root {
-	--blue-text-color: #8182f9;
-	--blue-button-color: #6261f3;
-	--puple-text-color: #7475ee;
-	--darkest-bakground: #111025;
-	--dark-background: #181831;
-	--delete-red: #dd5182;
-	--dark-details: #43437c;
-	--yellow-details: rgb(231, 175, 61); /*#e7af3d*/
-	--glow: 0 0 8px #e7af3d;
 }

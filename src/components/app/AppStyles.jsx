@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const AppContainer = styled.div`
-	height: 100vh;
+	height: ${({ height }) => (height ? height : "100vh")};
 	background-color: ${({ theme }) => theme.colors.darkBackground};
 	overflow-x: auto;
 `;
-
 
 export const Theme = {
 	colors: {
@@ -32,4 +31,3 @@ export const Theme = {
 		shadow: "0px 0px 11px rgba(4, 4, 5, 0.4);",
 	},
 };
-
