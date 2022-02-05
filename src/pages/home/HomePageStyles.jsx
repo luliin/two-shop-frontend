@@ -8,6 +8,9 @@ export const HomeContainer = styled.div`
 	align-items: center;
 	overflow-x: hidden;
 	height: calc(80vh - 65px);
+	@media (min-width: 768px) {
+		height: calc(100vh - 65px);
+	}
 `;
 
 export const Header = styled.div`
@@ -73,6 +76,12 @@ export const HomeHeadingContainer = styled(motion.div)`
 	@media (max-width: 400) {
 		margin-top: 0px;
 	}
+	@media (min-width: 768px) {
+		height: 60vh;
+		margin-top: 4vh;
+		margin-bottom: 2vh;
+		width: 80%;
+	}
 `;
 
 export const Wrapper = styled.div`
@@ -116,14 +125,19 @@ export const MemberContainer = styled(motion.div)`
 		text-decoration: dashed;
 		text-decoration-color: white;
 	}
+
+	@media (min-width: 768px) {
+		height: 10vh;
+	}
 `;
 
 export const MemberDefaultText = styled.div`
 	font-family: "Barlow Condensed", sans-serif;
 	font-size: 24px;
-	padding: 0 5px;
+	padding: 0 10px;
 	@media (max-width: 300px) {
 		font-size: 20px;
+		padding: 0 5px;
 	}
 `;
 

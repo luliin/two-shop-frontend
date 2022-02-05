@@ -24,6 +24,9 @@ export const OuterContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	@media (min-width: 768px) {
+		padding-top: 10vh;
+	}
 `;
 
 export const FormContainer = styled.div`
@@ -39,6 +42,11 @@ export const FormContainer = styled.div`
 	margin-top: ${({ mt }) => (mt ? mt : "10%")};
 	margin-bottom: ${({ mt }) => (mt ? mt : "5%")};
 	width: 95vw;
+	@media (min-width: 768px) {
+		margin-top: 3%;
+		width: 60vw;
+		height: ${({ height }) => (height ? height : "60vh")};
+	}
 `;
 
 export const FormHeading = styled.h1`
