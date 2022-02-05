@@ -29,7 +29,6 @@ class WebSocketLink extends ApolloLink {
 					complete: sink.complete.bind(sink),
 					error: (err) => {
 						if (Array.isArray(err))
-							// GraphQLError[]
 							return sink.error(
 								new Error(
 									err.map(({ message }) => message).join(", ")
@@ -59,7 +58,7 @@ const httpLink = new HttpLink({
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors)
-		graphQLErrors.forEach(({ message, locations, path }) => {
+		graphQLErrors.forEach(({ message }) => {
 			console.log(`GraphQL Error: ${message}`);
 		});
 
@@ -78,7 +77,7 @@ const authLink = new ApolloLink2((operation, forward) => {
 
 const wsLink = new WebSocketLink({
 	url: "wss://two-shop.herokuapp.com/subscription",
-	connectionParams: () => ({ Authorization: 1234 }),
+	connectionParams: () => ({ Authorization: "" }),
 });
 
 const splitLink = split(

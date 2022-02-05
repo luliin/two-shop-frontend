@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export const NavbarStyled = styled.nav`
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
-	height: min(7vh, 80px);
+	height: 65px;
 	color: ${({ theme }) => theme.colors.blueTextColor};
 	font-weight: bold;
 `;
@@ -37,9 +37,9 @@ export const NavLogo = styled.h3`
 
 export const IconWrapper = styled(motion.div)`
 	z-index: 100;
-	display:flex;
+	display: flex;
 	align-items: center;
-	cursor: ${({cursor})=> cursor ? cursor: "pointer"}
+	cursor: ${({ cursor }) => (cursor ? cursor : "pointer")};
 `;
 
 export const MenuIcon = styled(GiHamburgerMenu)`

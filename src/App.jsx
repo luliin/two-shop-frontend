@@ -32,7 +32,7 @@ function App() {
 			{}
 			<UserContext.Provider value={userValue}>
 				<MenuContext.Provider value={menuValue}>
-					<AppContainer onClick={handleMenuOpen}>
+					<AppContainer height={`100%`} onClick={handleMenuOpen}>
 						<Navbar
 							{...{
 								shouldClose: [shouldClose, setShouldClose],

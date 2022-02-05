@@ -18,6 +18,9 @@ export const FormStyled = styled.form`
 `;
 
 export const OuterContainer = styled.div`
+	padding-top: max(10%, 50px);
+	padding-bottom: max(10%, 50px);
+	min-height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -30,15 +33,17 @@ export const FormContainer = styled.div`
 	align-items: center;
 	box-shadow: ${({ theme }) => theme.effects.shadow};
 	border-radius: 0 5em 0 5em;
-	height: 60vh;
-	height: ${({ height }) => (height ? height : "60vh")};
+	height: 60%;
+	height: ${({ height }) => (height ? height : "60%")};
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
-	margin-top: 10vh;
+	margin-top: ${({ mt }) => (mt ? mt : "10%")};
+	margin-bottom: ${({ mt }) => (mt ? mt : "5%")};
 	width: 90vw;
 `;
 
 export const FormHeading = styled.h1`
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
+	margin-top: ${({ mt }) => (mt ? mt : "")};
 	text-align: center;
 	&:hover {
 		text-shadow: ${({ theme }) =>

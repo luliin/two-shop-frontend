@@ -25,6 +25,8 @@ export const Select = styled.select.attrs(({ value }) => ({
 	padding: 0 13px;
 	font-family: "Barlow Condensed", sans-serfif;
 	font-size: 1em;
+	-webkit-appearance: none;
+	background: #fff;
 
 	optgroup,
 	option {

@@ -90,8 +90,10 @@ const LoginPage = () => {
 		<>
 			{!user && (
 				<OuterContainer>
-					<FormContainer>
-						<FormHeading>Logga in</FormHeading>
+					<FormContainer mt={"10%"}>
+						<FormHeading mb={"0.3em"} mt={"0.8em"}>
+							Logga in
+						</FormHeading>
 						<FormStyled onSubmit={handleSubmit}>
 							<InputRow>
 								<LabelStyled
@@ -154,8 +156,8 @@ const LoginPage = () => {
 						>
 							Glömt ditt lösenord?
 						</InputRow>
-						<FormDivider mt={"20px"} mb={"20px"} />
-						<InputRow gap={"5px"} pb={"1em"}>
+						<FormDivider mt={"20px"} mb={"1em"} />
+						<InputRow gap={"5px"} pb={"2em"}>
 							Inget konto?
 							<Link to={"/register"}>
 								<StrongText>Registrera dig här</StrongText>

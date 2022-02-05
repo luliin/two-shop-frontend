@@ -485,7 +485,12 @@ const ShoppingListViewPage = () => {
 							)}
 						</TopBar>
 						<OuterContainer
-							height={"calc(100vh - min(200px, 20vh))"}
+							height={
+								"max(calc(100vh - min(200px, 20vh)), 600px)"
+							}
+							xsheight={
+								"max(calc(100vh - min(200px, 20vh)), 520px)"
+							}
 						>
 							{loadingCompleted ? (
 								<>
@@ -544,7 +549,7 @@ const ShoppingListViewPage = () => {
 										)}
 										<div
 											style={{
-												height: "5vh",
+												height: "70px",
 												width: "100%",
 											}}
 										></div>

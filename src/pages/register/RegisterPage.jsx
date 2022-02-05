@@ -97,8 +97,8 @@ const RegisterPage = () => {
 		<>
 			{!user && (
 				<OuterContainer>
-					<FormContainer height={"70vh"}>
-						<FormHeading>Skapa konto</FormHeading>
+					<FormContainer height={"90%"} mt={"0"} mb={"0"}>
+						<FormHeading mt={"1em"}>Skapa konto</FormHeading>
 						<FormStyled
 							onSubmit={handleSubmit}
 							onFocus={() => {
@@ -191,7 +191,7 @@ const RegisterPage = () => {
 							</WideButtonStyled>
 						</FormStyled>
 						<FormDivider mt={"1px"} mb={"10px"} />
-						<InputRow gap={"5px"} pb={"1em"}>
+						<InputRow gap={"5px"} pb={"1.5em"}>
 							Redan medlem?
 							<Link to={"/login"}>
 								<StrongText>Logga in</StrongText>

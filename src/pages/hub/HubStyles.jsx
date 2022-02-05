@@ -41,6 +41,10 @@ export const OuterContainer = styled.div`
 			/* height: 0.5rem;  */
 		}
 	}
+	@media (max-width: 280px) {
+		height: ${({ xsheight }) =>
+			xsheight ? xsheight : "calc(100vh - min(135px, 14vh))"};
+	}
 `;
 
 export const HubContainer = styled.div`
@@ -104,14 +108,13 @@ export const ModalContainer = styled(motion.div)`
 	align-items: center;
 	box-shadow: ${({ theme }) => theme.effects.shadow};
 	border-radius: 0 5em 0 5em;
-	height: 60vh;
-	height: ${({ height }) => (height ? height : "60vh")};
+	height: ${({ height }) => (height ? height : "60%")};
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
 	width: min(500px, 80vw);
 	position: fixed;
 	top: 55%;
 	left: 50%;
-	@media (max-width:300px) {
+	@media (max-width: 300px) {
 		height: 65vh;
 	}
 	/* transform: translate(-50%, -50%); */

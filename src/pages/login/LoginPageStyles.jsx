@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {RiLockPasswordFill, RiUser3Fill} from 'react-icons/ri'
+import { RiLockPasswordFill, RiUser3Fill } from "react-icons/ri";
 
 export const OuterContainer = styled.div`
 	display: flex;
@@ -15,14 +15,17 @@ export const LoginContainer = styled.div`
 	box-shadow: ${({ theme }) => theme.effects.shadow};
 	border-radius: 0 5em 0 5em;
 
-	height: 60vh;
+	height: 60%;
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
-	margin-top: 10vh;
+	margin-top: 10%;
 	width: 90vw;
+	@media(max-width: 789px) {
+		margin-top: 0;
+	}
 `;
 
 export const LoginHeading = styled.h1`
-margin-bottom:1em;
+	margin-bottom: 1em;
 	&:hover {
 		text-shadow: ${({ theme }) =>
 			theme.effects.glow(theme.colors.deleteRed)};
@@ -32,7 +35,6 @@ margin-bottom:1em;
 
 export const UserIcon = styled(RiUser3Fill)`
 	font-size: 24px;
-	
 `;
 
 export const PasswordIcon = styled(RiLockPasswordFill)`
@@ -45,7 +47,5 @@ export const InputRow = styled.div`
 	flex-grow: 1em;
 	gap: 1em;
 	font-family: "Barlow Condensed", sans-serif;
-	color: ${({color}) => color ? color : ""}
+	color: ${({ color }) => (color ? color : "")};
 `;
-
-

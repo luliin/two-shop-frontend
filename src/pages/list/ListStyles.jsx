@@ -28,7 +28,7 @@ export const PressableText = styled(motion.div)`
 	cursor: pointer;
 `;
 export const TitleWrapper = styled.div`
-	width: clamp(35vw, 60%, 1000px);
+	width: clamp(35vw, 65%, 1000px);
 	height: min(50px, 4vh);
 	overflow-wrap: anywhere;
 	overflow-x: hidden;
@@ -48,7 +48,7 @@ export const TitleWrapper = styled.div`
 		border-radius: 5em;
 	}
 	@media (max-width: 768px) {
-		padding-left: 1em;
+		padding-left: 0.5em;
 		padding-top: 4px;
 		&::-webkit-scrollbar {
 			display: none;
