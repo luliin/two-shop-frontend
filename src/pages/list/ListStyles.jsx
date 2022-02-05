@@ -73,6 +73,10 @@ export const ListContainer = styled.div`
 		height: 100%;
 		row-gap: 2vh;
 	}
+	@media (min-width: 560px) {
+		height: 100%;
+		row-gap: 2vh;
+	}
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none;
 	&::-webkit-scrollbar {
@@ -156,7 +160,7 @@ export const TileRow = styled(ItemTitleWrapper)`
 
 export const TrashIcon = styled(RiDeleteBinLine)`
 	font-size: 24px;
-	color: ${({ theme, color }) => color ? color: theme.colors.deleteRed};
+	color: ${({ theme, color }) => (color ? color : theme.colors.deleteRed)};
 `;
 
 export const EditIcon = styled(RiEdit2Line)`
@@ -184,4 +188,12 @@ export const UnitIcon = styled(RiPencilRuler2Line)`
 
 export const PlusIcon = styled(RiAddLine)`
 	font-size: 24px;
+`;
+
+export const LastTilePadding = styled.div`
+	height: 70px;
+	width: 100%;
+	@media (min-width: 768px) {
+		display: none;
+	}
 `;

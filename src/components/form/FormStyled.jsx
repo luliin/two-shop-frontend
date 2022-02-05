@@ -38,12 +38,12 @@ export const FormContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
 	margin-top: ${({ mt }) => (mt ? mt : "10%")};
 	margin-bottom: ${({ mt }) => (mt ? mt : "5%")};
-	width: 90vw;
+	width: 95vw;
 `;
 
 export const FormHeading = styled.h1`
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
-	margin-top: ${({ mt }) => (mt ? mt : "")};
+	margin-top: ${({ mt }) => (mt ? mt : "0.2em")};
 	text-align: center;
 	&:hover {
 		text-shadow: ${({ theme }) =>
@@ -86,6 +86,7 @@ export const InputRow = styled.div`
 	gap: ${({ gap }) => (gap ? gap : "1em")};
 	font-weight: ${({ fw }) => (fw ? fw : "")};
 	margin-bottom: ${({ mb }) => (mb ? mb : "")};
+	margin-top: ${({ mt }) => (mt ? mt : "")};
 	padding-bottom: ${({ pb }) => (pb ? pb : "")};
 	font-family: "Barlow Condensed", sans-serif;
 	color: ${({ color }) => (color ? color : "")};

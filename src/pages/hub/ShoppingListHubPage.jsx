@@ -190,6 +190,7 @@ const ShoppingListHubPage = () => {
 											Skapa ny lista
 										</FormHeading>
 										<FormStyled
+											padding={"1rem 1rem 0 1rem"}
 											onSubmit={handleCreateShoppingList}
 										>
 											<InputRow>
@@ -254,7 +255,7 @@ const ShoppingListHubPage = () => {
 											</WideButtonStyled>
 										</FormStyled>
 										<FormDivider
-											mt={"20px"}
+											mt={"0.3em"}
 											mb={"20px"}
 											width={"min(300px, 67vw)"}
 										/>

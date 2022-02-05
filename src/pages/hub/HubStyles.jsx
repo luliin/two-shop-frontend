@@ -41,6 +41,9 @@ export const OuterContainer = styled.div`
 			/* height: 0.5rem;  */
 		}
 	}
+	@media (max-width: 400px) {
+		height: calc(90vh - min(200px, 20vh));
+	}
 	@media (max-width: 280px) {
 		height: ${({ xsheight }) =>
 			xsheight ? xsheight : "calc(100vh - min(135px, 14vh))"};
@@ -110,12 +113,12 @@ export const ModalContainer = styled(motion.div)`
 	border-radius: 0 5em 0 5em;
 	height: ${({ height }) => (height ? height : "60%")};
 	background-color: ${({ theme }) => theme.colors.lighterBackground};
-	width: min(500px, 80vw);
+	width: min(500px, 95vw);
 	position: fixed;
-	top: 55%;
+	top: 50%;
 	left: 50%;
 	@media (max-width: 300px) {
-		height: 65vh;
+		height: 65%;
 	}
 	/* transform: translate(-50%, -50%); */
 `;

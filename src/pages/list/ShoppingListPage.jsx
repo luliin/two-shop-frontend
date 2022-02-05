@@ -20,6 +20,7 @@ import {
 	PressableText,
 	TrashIcon,
 	PlusIcon,
+	LastTilePadding,
 } from "./ListStyles";
 
 import ItemCard from "../../components/cards/ItemCard";
@@ -448,7 +449,7 @@ const ShoppingListViewPage = () => {
 				</TopBar>
 				{shoppingListData ? (
 					<>
-						<TopBar p={" 0 1em 0 1em"}>
+						<TopBar p={" 0 1em 5px 1em"}>
 							<TitleWrapper>
 								<ListTitle>{shoppingListData?.name}</ListTitle>
 							</TitleWrapper>
@@ -485,11 +486,9 @@ const ShoppingListViewPage = () => {
 							)}
 						</TopBar>
 						<OuterContainer
-							height={
-								"max(calc(100vh - min(200px, 20vh)), 600px)"
-							}
+							height={"max(calc(90vh - min(200px, 20vh)), 600px)"}
 							xsheight={
-								"max(calc(100vh - min(200px, 20vh)), 520px)"
+								"max(calc(90vh - min(200px, 20vh)), 520px)"
 							}
 						>
 							{loadingCompleted ? (
@@ -547,12 +546,7 @@ const ShoppingListViewPage = () => {
 												))}
 											</>
 										)}
-										<div
-											style={{
-												height: "70px",
-												width: "100%",
-											}}
-										></div>
+										<LastTilePadding />
 										<RoundButton
 											onClick={handleShowModal}
 											variants={buttonVariants}
@@ -590,6 +584,7 @@ const ShoppingListViewPage = () => {
 												onClick={handleLeaveModal}
 											>
 												<ModalContainer
+													height={"65%"}
 													exit={{ y: "-200vh" }}
 													key="modal"
 													initial={{
@@ -609,64 +604,33 @@ const ShoppingListViewPage = () => {
 														setHover(false);
 													}}
 												>
-													{edit ? (
+													{
 														<FormHeading
 															{...{
-																children:
-																	"Ändra produkt",
+																children: edit
+																	? "Ändra produkt"
+																	: toDelete
+																	? `Ta bort ${item.name}`
+																	: clear
+																	? "Töm listan?"
+																	: isRemoveCollaborator &&
+																	  isOwner
+																	? `Vill du kicka ${shoppingListData.collaborator?.username}?`
+																	: isRemoveCollaborator &&
+																	  !isOwner
+																	? "Vill du lämna listan?"
+																	: deleteList
+																	? "Radera listan?"
+																	: isInviteCollaborator
+																	? "Bjud in partner"
+																	: "Lägg till produkt",
 															}}
 														/>
-													) : toDelete ? (
-														<FormHeading
-															{...{
-																children: `Ta bort ${item.name}`,
-															}}
-														/>
-													) : clear ? (
-														<FormHeading
-															{...{
-																children:
-																	"Töm listan?",
-															}}
-														/>
-													) : isRemoveCollaborator ? (
-														isOwner ? (
-															<FormHeading
-																{...{
-																	children: `Vill du kicka ${shoppingListData.collaborator?.username}?`,
-																}}
-															/>
-														) : (
-															<FormHeading
-																{...{
-																	children:
-																		"Vill du lämna listan?",
-																}}
-															/>
-														)
-													) : deleteList ? (
-														<FormHeading
-															{...{
-																children:
-																	"Radera listan?",
-															}}
-														/>
-													) : isInviteCollaborator ? (
-														<FormHeading
-															{...{
-																children:
-																	"Bjud in partner",
-															}}
-														/>
-													) : (
-														<FormHeading
-															{...{
-																children:
-																	"Lägg till produkt",
-															}}
-														/>
-													)}
+													}
 													<FormStyled
+														padding={
+															"1rem 1rem 0 1rem"
+														}
 														onSubmit={
 															handleModifyItem
 														}
@@ -717,8 +681,8 @@ const ShoppingListViewPage = () => {
 														</WideButtonStyled>
 													</FormStyled>
 													<FormDivider
-														mt={"20px"}
-														mb={"20px"}
+														mt={"0.5em"}
+														mb={"0.5em"}
 														width={
 															"min(300px, 67vw)"
 														}

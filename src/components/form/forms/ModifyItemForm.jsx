@@ -23,7 +23,7 @@ const ModifyItemForm = ({
 					}}
 					value={item.name}
 					id="item-name"
-					width={"min(250px, 56vw)"}
+					width={"min(260px, 56vw)"}
 					autoComplete="off"
 					type="text"
 					placeholder={"Produktens namn"}
@@ -47,7 +47,7 @@ const ModifyItemForm = ({
 				<InputField
 					value={item.quantity}
 					id="item-quantity"
-					width={"min(250px, 56vw)"}
+					width={"min(260px, 56vw)"}
 					autoComplete="off"
 					type="number"
 					placeholder={"Antal"}
@@ -65,6 +65,7 @@ const ModifyItemForm = ({
 				<Select
 					name="unit"
 					value={item.unit}
+					width={"min(260px, 56vw)"}
 					onChange={(e) => {
 						handleCreateItemInput(e);
 					}}
