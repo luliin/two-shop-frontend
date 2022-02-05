@@ -1,4 +1,6 @@
-# TwoShop - A platform for collaborative shopping lists for two
+# TwoShop
+
+## - A platform for collaborative shopping lists for two
 
 This project is part of my final thesis as a Java development student at Nackademin in Stockholm.
 
