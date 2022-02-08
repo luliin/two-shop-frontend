@@ -596,7 +596,7 @@ const ShoppingListViewPage = () => {
 												onClick={handleLeaveModal}
 											>
 												<ModalContainer
-													height={"max(65%, 600px)"}
+													height={"max(55%, 450px)"}
 													exit={{ y: "-200vh" }}
 													key="modal"
 													initial={{
