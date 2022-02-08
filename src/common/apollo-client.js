@@ -78,6 +78,10 @@ const authLink = new ApolloLink2((operation, forward) => {
 const wsLink = new WebSocketLink({
 	url: "wss://two-shop.herokuapp.com/subscription",
 	connectionParams: () => ({ Authorization: "" }),
+	options: {
+		reconnect: true,
+		keepAlive: 10_000,
+	},
 });
 
 const splitLink = split(
