@@ -30,7 +30,7 @@ import {
 } from "../../components/input/FormInputStyles";
 import { WideButtonStyled } from "../../components/buttons/WideButtonStyled";
 
-import { PlusIcon, PressableText } from "../list/ListStyles";
+import { LastTilePadding, PlusIcon, PressableText } from "../list/ListStyles";
 import { IconWrapper } from "../../components/icons/IconWrapper";
 import { UserContext } from "../../context/UserContext";
 import { useGetUserShoppingLists } from "../../hooks/shoppingLists/useGetShoppingLists";
@@ -145,7 +145,7 @@ const ShoppingListHubPage = () => {
 										key={list.id}
 									/>
 								))}
-
+								<LastTilePadding />
 								<RoundButton
 									onClick={handleShowModal}
 									variants={buttonVariants}
