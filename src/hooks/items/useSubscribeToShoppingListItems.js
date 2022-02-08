@@ -14,7 +14,7 @@ const ITEM_MODIFIED = gql`
 	}
 `;
 
-export const useSubscribeToItemModified = (shoppingListId, data) => {
+export const useSubscribeToItemModified = (shoppingListId) => {
 	const itemModified = useSubscription(ITEM_MODIFIED, {
 		variables: { shoppingListId: shoppingListId },
 	});
