@@ -32,6 +32,9 @@ const LoginPage = () => {
 		if (user) {
 			navigateToLists();
 		}
+		fetch("https://twoshop-mail.herokuapp.com/ping").catch((err) => {
+			console.log(err);
+		});
 		return () => {};
 	}, [navigate, user]);
 
