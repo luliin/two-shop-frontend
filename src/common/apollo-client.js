@@ -53,7 +53,7 @@ class WebSocketLink extends ApolloLink {
 }
 
 const httpLink = new HttpLink({
-	uri: "https://two-shop.herokuapp.com/graphql",
+	uri: "https://twoshop.up.railway.app/graphql",
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -76,7 +76,7 @@ const authLink = new ApolloLink2((operation, forward) => {
 });
 
 const wsLink = new WebSocketLink({
-	url: "wss://two-shop.herokuapp.com/subscription",
+	url: "wss://twoshop.up.railway.app/subscription",
 	connectionParams: () => ({ Authorization: "" }),
 });
 
