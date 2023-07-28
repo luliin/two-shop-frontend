@@ -1,9 +1,0 @@
-{
-	"extends": ["plugin:react/recommended"]
-	
-  "rules": {
-    "eqeqeq": "off",
-    "no-console": "off"
-  
-}
-}
