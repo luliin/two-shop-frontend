@@ -92,7 +92,10 @@ const ShoppingListHubPage = () => {
 							{<CollaboratorIcon pt={""} />} = Delas med dig
 						</IconWithLabel>
 					</TopBar>
-					<OuterContainer>
+					<OuterContainer
+						height={"max(calc(90vh - min(200px, 20vh)), 600px)"}
+						xsheight={"max(calc(90vh - min(200px, 20vh)), 520px)"}
+						>
 						{data && (
 							<HubContainer>
 								<>
